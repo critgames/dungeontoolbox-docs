@@ -112,6 +112,36 @@ Once a character is selected from the Dashboard, the user enters the main "Activ
 
 ---
 
+## User Interface
+
+### Character Dashboard
+The central hub for all user characters.
+*   **Visual Gallery:** A grid/list view displaying all characters visually with their portraits, names, and key stats (Level/Class).
+*   **Quick Action:** Click on any character to load that character view.
+*   **Search Shortcut:** Easy access to browse the Community Library for pre-generated characters.
+
+### Character View (Gameplay View)
+A specialized, visual interface designed for use during a live session.
+*   **Tabbed Navigation:** organized into Basic, Combat, Inventory, Details, and Journal tabs as described in the Feature Breakdown.
+*   **The Companion Sidebar:** A persistent chat interface for rules queries, state updates, and inventory management.
+*   **Integrated Dice Roller:** Overlays and roll-results that appear directly in the context of the sheet.
+
+### New Character Creation
+Multiple paths to getting into the game quickly.
+*   **The Companion (Step-by-Step):** A guided, conversational flow that asks questions to build a character (optimized for new players).
+*   **Quick Build:** A rapid generation option using minimal inputs (Tone, Class, Level) for near-instant creation.
+*   **Search & Use:** Direct integration with the Community Library to find and adopt existing characters.
+
+### User Profile
+Account settings and personalization.
+*   **Account Info:** Name, Avatar, and Email management.
+*   **Subscription Management:** Displays current tier information (Free/Player/Gamemaster) and a prominent Upgrade button.
+*   **System Preferences:**
+    *   **Vibrate on Rolls:** Toggle haptic feedback for digital dice rolls (Mobile/Controller).
+    *   **Auto-Share Characters:** Toggle to automatically contribute Level 1 characters to the Community Library (Default: **Yes**).
+
+---
+
 ## Customer User Journeys
 
 ### Journey 1: The New Player (Free User)
