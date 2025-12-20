@@ -1,4 +1,3 @@
-```markdown
 # Backend API Documentation: RPG Player Character
 
 **Version:** 1.0.0
@@ -404,9 +403,5 @@ Sent when HP, Slots, or other dynamic stats change via the API.
     "temp_hp": 0
   }
 }
-
-```
-
-```
 
 ```

@@ -13,6 +13,7 @@ The system uses a **Backend-for-Frontend (BFF)** pattern.
 * **Backend:** Node.js API (manages Game Rules & AI).
 * **Database:** Supabase (PostgreSQL).
 * **Auth:** Supabase Auth (Client sends JWT, Backend verifies it).
+* **Security:** Use HTTPs, JWT, and Rate Limiting.
 
 ### Why this architecture?
 We need strict validation of D&D 2024 rules before saving data. Doing this in a Node.js middleware layer is cleaner than using Database Triggers.
@@ -43,6 +44,15 @@ The API must verify the `Authorization: Bearer <token>` header on every protecte
     4.  Parse JSON response.
     5.  Deduct 1 Credit.
     6.  **Do NOT save to DB yet.** Return JSON to client for preview.
+
+#### **POST** `/companion/chat`
+* **Input:** `{ message: "Can I grapple a ghost?", characterId: "uuid" }`
+* **Logic:**
+    1.  **Auth Guard:** Verify user.
+    2.  **Credit Check:** Deduct 1 AI Credit (if applicable).
+    3.  **Context Retrieval:** Fetch character sheet + relevant vector search results (RAG).
+    4.  **AI Call:** Send context + user message to Gemini 1.5.
+    5.  **Response:** Return AI answer + source citations.
 
 #### **POST** `/api/characters/save`
 * **Input:** `{ characterData: JSON }`
