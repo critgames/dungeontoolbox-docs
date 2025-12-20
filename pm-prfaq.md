@@ -1,5 +1,3 @@
-Here is the complete PR/FAQ document in Markdown format, incorporating all the specific sections, pricing structures, and tonal adjustments we discussed.
-
 ---
 
 # PR/FAQ: RPG Player Character by Crit Games
@@ -35,19 +33,82 @@ Crit Games is dedicated to modernizing the tabletop experience, building digital
 
 ## Product Requirements
 
-| ID | Feature | Requirement | User Tier |
+| Priority | Feature | Requirement | User Tier |
 |:---|:---|:---|:---|
-| FR-01 | Character Capacity | System must allow creation and storage of up to **6 characters**. | Free ($0/mo) |
-| FR-02 | Companion Creation | System must provide **The Companion** to generate full character stats from natural language concepts. | Free ($0/mo) |
-| FR-03 | Pre-Generated Library | System must provide access to a library of ready-to-play characters. | Free ($0/mo) |
-| FR-04 | Limited Companion Usage | **The Companion** is limited to **3 Character Generations per month** for free users. | Free ($0/mo) |
-| FR-05 | Extended Capacity | System must allow creation and storage of up to **12 characters**. | Player ($5/mo) |
-| FR-06 | Companion Access | System must provide persistent **Companion** access for ongoing rules queries and inventory management. | Player ($5/mo) |
-| FR-07 | Companion Memory | **The Companion** must index and retrieve context from user-provided Adventure Notes/Journals. | Player ($5/mo) |
-| FR-08 | Print to PDF | System must generate a printable, formatted character sheet PDF. | Player ($5/mo) |
-| FR-09 | Priority Access | Users must receive early access to new features. | Player ($5/mo) |
-| FR-10 | Unlimited Management | System must allow unlimited character generation. | GM (Coming Soon) |
-| FR-11 | D&D Beyond Import | System must import character data (JSON/PDF) from D&D Beyond. | Free ($0/mo) |
+| **P0** | Character Capacity | System must allow creation and storage of up to **6 characters**. | Free ($0/mo) |
+| **P0** | Companion Creation | System must provide **The Companion** to generate full character stats from natural language concepts. | Free ($0/mo) |
+| **P0** | Lifetime AI Limit | **The Companion** is limited to **50 Lifetime Interactions** (Creation Steps or Gameplay Queries) for free users. | Free ($0/mo) |
+| **P0** | Extended Capacity | System must allow creation and storage of up to **12 characters**. | Player ($5/mo) |
+| **P0** | Companion Access | System must provide persistent **Companion** access (capped at 500/mo) for ongoing rules queries and inventory management. | Player ($5/mo) |
+| **P0** | Gamemaster Capacity | System must allow **Unlimited Character Storage** for Gamemasters. | GM ($15/mo) |
+| **P0** | Unlimited Companion | System must provide **Unlimited Companion Interactions** for Gamemasters. | GM ($15/mo) |
+| **P0** | Companion Memory | **The Companion** must index and retrieve context from user-provided Adventure Notes/Journals. | Player/GM |
+| **P0** | D&D Beyond Import | System must import character data (JSON/PDF) from D&D Beyond. | Free ($0/mo) |
+| **P0** | Universal Dice Roller | System must provide a simple, persistent 3D/Digital dice roller overlay available on all application views. | Free ($0/mo) |
+| **P0** | Character Dashboard | A visual landing page displaying all user characters with portraits and names, allowing one-click selection to "Enter Play". | Free ($0/mo) |
+| **P0** | Community Library | System must provide a searchable library of community-generated characters. Level 1 characters are **Auto-Shared** by default (Opt-out available). | Free ($0/mo) |
+| **P1** | Print to PDF | System must generate a printable, formatted character sheet PDF. | Player/GM |
+| **P1** | Context-Aware Click-to-Roll | Users can touch/click character sheet stats (Initiative, Skills, Saves) to instantly trigger a roll with correct modifiers. | Free ($0/mo) |
+| **P2** | Priority Access | Users must receive early access to new features. | Player/GM |
+| **P2** | Adventure Log | System must provide a free-text journal section for users to record session notes and campaign details. | Free ($0/mo) |
+| **P2** | Quest Tracker | System must provide a structured list to track active, completed, and failed quests. | Free ($0/mo) |
+| **P2** | Auto-Generate Character | System must provide a "Rapid Build" option to generate a full character based on minimal inputs (Tone/Class/Level). | Free ($0/mo) |
+
+---
+
+## Feature Comparison
+
+| Tier | Free ($0/mo) | Player ($5/mo) | Gamemaster ($15/mo) |
+| :--- | :--- | :--- | :--- |
+| **Character Storage** | 6 Characters | 12 Characters | **Unlimited** |
+| **Gamneplay Mode** | Yes | Yes | Yes |
+| **Dice Roller** | Yes | Yes | Yes |
+| **Click-to-Roll** | Yes | Yes | Yes |
+| **Import** | Yes | Yes | Yes |
+| **The Companion (AI)** | **50 Lifetime** (Trial) | **500 / Month** (High) | **Unlimited** |
+| **Creation Mode** | Limited | **Full** | **Full** |
+| **Context Memory** | No | **Yes** | **Yes** |
+| **Export** | Digital Only | **Print to PDF** | **Print to PDF** |
+
+---
+
+## Detailed Feature Breakdown
+
+### Creation & Management
+*   **The Companion (Creation):** Go from a text description ("Spooky swamp druid") to a full stat block in under 2 minutes.
+*   **D&D Beyond Import:** One-click import capability for users migrating from other platforms (supports PDF & JSON).
+*   **Community Library (Pre-Gens):** Browse and copy thousands of ready-to-play characters.
+    *   **Auto-Share:** By default, every new Level 1 character created is added to the public library, creating a vast resource for new players.
+    *   **Privacy:** Users can toggle "Private Mode" in preferences to keep their creations hidden.
+*   **Intelligent Sheet:** A mobile-responsive sheet that hides complexity until you need it, organizing actions by "Combat", "Exploration", and "Social".
+
+### Active Play Assistance
+*   **The Companion (Rules):** Ask natural language questions ("What's the range of Fireball?") and get instant, accurate answers cited from the System Reference Document (SRD).
+*   **Dynamic State Updates:** Type "I take 15 slashing damage" and **The Companion** automatically adjusts HP and concentration checks.
+*   **The Companion (Memory):** The AI indexes your adventure notes (Journal/Session Logs) to answer context-heavy questions ("Who is the Mayor?").
+
+### Character View (Tabbed Interface)
+Once a character is selected from the Dashboard, the user enters the main "Active Play" interface, organized into five intuitive tabs for focused gameplay.
+
+*   **1. Basic View (Roleplay & Exploration):**
+    *   Designed for social interactions and skill checks.
+    *   **Displays:** Character Identity (Name, Class, Subclass, Species, Background, Alignment), Level & XP, Ability Scores (with modifiers), Skill List, Saving Throws, Proficiency Bonus, Passive Perception, and Heroic Inspiration.
+*   **2. Combat & Magic:**
+    *   Designed for tactical encounters.
+    *   **Displays:** Vitals (HP Current/Max/Temp, AC, Speed, Initiative, Hit Dice, Conditions, Exhaustion), Actions (Weapons, Attacks), Armor, and Spellcasting (Save DC, Attack Bonus, Slots, Known/Prepared Spells).
+*   **3. Inventory:**
+    *   Designed for resource management.
+    *   **Displays:** Equipment list, Magic Items, and Currency (GP/SP/CP/PP/EP).
+*   **4. Character Details:**
+    *   Designed for deep roleplay context.
+    *   **Displays:** All Proficiencies (Languages, Tools, Armor, Weapons), Appearance, Backstory, Personality Traits, Ideals, Bonds, and Flaws.
+*   **5. Journal & Notes:**
+    *   Designed for campaign tracking.
+    *   **Displays:** Free-form Session Notes and a structured Quest Log.
+
+### Tools & Utilities
+*   **Context-Aware Dice Roller:** Click any stat to roll. The AI adds modifiers automatically.
+*   **Printable PDF Export:** Generate a classic-style character sheet for physical table play.
 
 ---
 
@@ -62,7 +123,7 @@ Crit Games is dedicated to modernizing the tabletop experience, building digital
 3. **Creation:** Alex selects "Create New Character." **The Companion** asks, "What kind of Druid do you imagine?" Alex types, "A spooky swamp druid who loves insects."
 4. **The Assist:** **The Companion** suggests appropriate stats, a "Circle of Spores" subclass, and a background. Alex clicks "Approve."
 5. **Completion:** Within 5 minutes, Alex has a level 1 Druid.
-6. **Limit:** Two weeks later, Alex creates 3 more characters. When attempting to create a 4th character *with The Companion* in the same month, a prompt appears: *"You have reached your monthly limit of 3 Companion generations. Wait until next month or upgrade to the Player Tier for unlimited generations!"* (Note: He can still manually create characters up to his storage limit of 6).
+6. **Limit:** Over the next few weeks, Alex creates two more characters and plays several sessions, asking The Companion about rules. When he hits his 51st interaction, a prompt appears: *"You have reached your limit of 50 Lifetime Companion interactions. Upgrade to the Player Tier for unlimited AI access!"* (Note: He can still manually create characters and play without AI assistance).
 
 ### Journey 2: The Veteran (The Switcher)
 
@@ -75,69 +136,67 @@ Crit Games is dedicated to modernizing the tabletop experience, building digital
 5. **Context Query:** Later, she forgets a plot point. She asks: *"Do I have any items that would help me bribe the guard mentioned in my Last Session notes?"* **The Companion** checks her inventory AND her notes, replying: *"Yes, you have the **Golden Signet Ring** you looted from the Baron's vault in session 3."*
 6. **Validation:** Sarah realizes she didn't have to search through messy notebooks. She can just play.
 
-
-## Detailed Feature Breakdown
-
-### Creation & Management
-*   **The Companion (Creation):** Go from a text description ("Spooky swamp druid") to a full stat block in under 2 minutes.
-*   **D&D Beyond Import:** One-click import capability for users migrating from other platforms (supports PDF & JSON).
-*   **Intelligent Sheet:** A mobile-responsive sheet that hides complexity until you need it, organizing actions by "Combat", "Exploration", and "Social".
-
-### Active Play Assistance
-*   **The Companion (Rules):** Ask natural language questions ("What's the range of Fireball?") and get instant, accurate answers cited from the System Reference Document (SRD).
-*   **Dynamic State Updates:** Type "I take 15 slashing damage" and **The Companion** automatically adjusts HP and concentration checks.
-*   **The Companion (Memory):** The AI indexes your adventure notes (Journal/Session Logs) to answer context-heavy questions ("Who is the Mayor?").
-
-### Tools & Utilities
-*   **Context-Aware Dice Roller:** Click any stat to roll. The AI adds modifiers automatically.
-*   **Printable PDF Export:** Generate a classic-style character sheet for physical table play.
-
 ---
-
 
 ## FAQ
 
 ### External FAQ (Customer Facing)
 
+**Q: Does The Companion train on my private campaign notes?**
+**A:** No. Your data is your own. The Companion only "reads" your notes when you ask it a specific question to provide context. We do not use your personal campaigns to train our public models.
+
+**Q: Can I share my characters with my GM?**
+**A:** Yes. You can export your character as a PDF or JSON to send to your GM.
+
+**Q: What happens if I downgrade from Gamemaster to Free?**
+**A:** Your characters are safe, but you will be locked to the "First 6" created. You can choose which ones to keep active. Your AI interactions will revert to the 50 Lifetime limit (if not already used).
+
+**Q: Does this support the 2014 rules?**
+**A:** Our system is built native for D&D 2024 (5.5e). While you can manually enter 2014 content, The Companion's rules knowledge is strictly 2024.
+
 **Q: Is the Free Tier really free?**
-**A:** Yes. You can create, store, and play with up to 6 characters forever without paying a cent. You also get access to our library of Pre-Generated characters.
+**A:** Yes. You can create, store, and play with up to 6 characters forever. You get **50 Lifetime AI Interactions** to try out The Companion. After that, the core tools remain free, but the AI features require a subscription.
 
 **Q: How does The Companion help me?**
-**A:** For free users, **The Companion** acts as a creator for character generation (limited to 3/month). For paid users, **The Companion** becomes a persistent **Campaign Memory** agent. It understands the rules, your character stats, AND your personal notes, allowing it to answer complex context-aware questions.
+**A:** **The Companion** is your rules lawyer and creative partner.
+*   **Free:** Trial mode (50 Lifetime Interactions).
+*   **Player ($5):** Serious play (500 Interactions/Month), Context Memory, and 12 Character slots.
+*   **Gamemaster ($15):** Unlimited everything. Designed for power users who run games and manage dozens of characters/NPCs.
+
+**Q: Is 500 interactions enough for a Player?**
+**A:** Yes! That’s ~125 interactions per session (assuming 4 games/month). You would have to message the AI every 2 minutes for 4 hours straight to hit that limit. For 99% of players, it feels unlimited.
 
 **Q: Can I print my character sheet?**
 **A:** The "Print to Sheet" feature, which formats your data into a standard tabletop layout, is available in the $5 Player Tier. Free users can view their character stats digitally on any device.
 
+**Q: Can I upload my own character portraits?**
+**A:** Yes. You can upload any image or use **The Companion** to generate a custom portrait based on your description.
+
+**Q: How do I switch characters in the middle of a game?**
+**A:** Clicking the "Dashboard" home button instantly saves your current state and takes you back to your character list for a quick swap.
+
 **Q: What happens if I stop paying the $5 subscription?**
-**A:** Your account will revert to the Free Tier. You will keep your characters, but due to the AI generation limit, you will only be able to use **The Companion** to generate 3 new characters per month. You can still manually edit/play up to 6 active characters.
+**A:** Your account will revert to the Free Tier. You will keep your characters, but your AI access will stop if you have exceeded your 50 lifetime interactions. You can still manually edit/play up to 6 active characters.
 
 ### Internal FAQ (Stakeholder Facing)
 
 **Q: How do we define the AI limit for Free Users technically?**
-**A:** We use a simple counter: `generations_this_month`. Free users get 3. This resets on the 1st of the month. This is technically simpler than managing "active slots" and encourages users to pay for *convenience* (speed) rather than just *storage*.
+**A:** We use a hidden counter: `credits` that tracks the number of interactions with the Companion. Free users get 50. This never resets. "Interactions" are defined as any user request sent to the AI (e.g., "Create a Druid" count as 1, "What is my AC?" counts as 1). This "Try Before You Buy" model is easier to communicate than resetting quotas.
 
 **Q: Why 6 characters for the free tier?**
 **A:** Giving 6 slots (double the industry standard of 3) creates a massive "Generosity Hook" for marketing. We win on *storage*, but we monetize on *speed* (AI generation) and *intelligence* (Context Memory). This differentiates us from D&D Beyond.
 
 **Q: What is the cost impact of The Companion?**
-**A:** **The Companion** uses a structured chain of prompts. By caching pre-generated options and limiting the free user to creation-only prompts (rather than open-ended chat), we control inference costs while still providing the "magic" experience.
+**A:** **The Companion** uses a structured chain of prompts. With a strict cap of 50 lifetime requests per free user, our downside risk is capped (e.g., 50 * $0.002 = $0.10 max cost per free user). This serves as a predictable Customer Acquisition Cost (CAC).
 
 ---
 
 
-## Appendix: The Companion's Creation Flow (D&D 2024)
+## Appendix
+
+### The Companion's New Character Creation Flow (D&D 2024)
 
 **The Companion** guides the user through these decisions. At every step, the user can select a pre-defined option or type a custom request.
-
-### Step 0: Set the Tone
-*Question:* "What is the tone of your campaign?"
-*   [High Fantasy / Heroic Fantasy] (Standard D&D, Heroes vs Evil)
-*   [Dark Fantasy / Gothic Horror] (Gritty, Ravenloft/Witcher style)
-*   [Epic / Mythic Fantasy] (Save the World, Theros/Gods)
-*   [Political Intrigue & Mystery] (City-based, Eberron/Candlekeep)
-*   [Low Fantasy / Sword & Sorcery] (Rare Magic, Gritty Survival)
-*   [Specialized (Swashbuckling / War)] (Pirates, Military)
-*   *[Custom Input]*
 
 ### Step 1: Choose Your Class
 *Question:* "What adventurer class defines your style?"
@@ -201,27 +260,20 @@ Crit Games is dedicated to modernizing the tabletop experience, building digital
 *   [Druidic] (Druid)
 *   *[Custom Input]*
 
-### Step 5: Level
-*Question:* "What level is this character starting at?"
-*   [Level 1]
-*   [Level 3]
-*   [Level 5]
-*   *[Custom Input: 1-20]*
-
-### Step 6: Ability Scores
+### Step 5: Ability Scores
 *Question:* "How should we generate your stats?"
 *   [Standard Array] (15, 14, 13, 12, 10, 8)
 *   [Point Buy] (27 Points)
 *   [Manual Input]
 
-### Step 7: Equipment
+### Step 6: Equipment
 *Question:* "What gear do you start with?"
 *   [Starting Gold]
 *   [Class Config A] (Default Weapons/Pack)
 *   [Class Config B] (Alternative options)
 *   *[Custom Input]*
 
-### Step 8: Choose Spells (If Applicable)
+### Step 7: Choose Spells (If Applicable)
 *Question:* "What magic do you wield?"
 *   [Recommended List] (Role-based AI selection)
 *   [Attack Focus] (Damage spells)
@@ -229,7 +281,7 @@ Crit Games is dedicated to modernizing the tabletop experience, building digital
 *   [Support Focus] (Healing/Protection spells)
 *   *[Custom Input]*
 
-### Step 9: Choose Alignment
+### Step 8: Choose Alignment
 *Question:* "What is your moral compass?"
 *   [Lawful Good]
 *   [Neutral Good]
@@ -241,112 +293,225 @@ Crit Games is dedicated to modernizing the tabletop experience, building digital
 *   [Neutral Evil]
 *   [Chaotic Evil]
 
-### Step 10: Appearance (Optional)
+### Step 9: Appearance (Optional)
 *Question:* "What do you look like?"
 *   [Generate Portrait Description] (Based on Class/Species/Tone)
 *   [Visualize specific feature] ("A scar", "Glowing eyes")
 *   *[Custom Input]*
 
-### Step 11: Backstory (Optional)
+### Step 10: Backstory (Optional)
 *Question:* "What is your history?"
 *   [Generate from Background] (Uses Step 3 Choice)
 *   [Generate Tragic Event]
 *   [Generate Heroic Origin]
 *   *[Custom Input]*
 
-### Step 12: Personality (Optional)
+### Step 11: Personality (Optional)
 *Question:* "Who are you?"
 *(Generates 2024-compliant Traits, Ideals, Bonds, and Flaws linked to Background)*
 *   [Generate Suggested Traits]
 *   [Select Archetype] (e.g., "The Grumpy Mentor", "The Naive Hero")
 *   *[Custom Input]*
 
+### Step 12: Generate Portrait
+*Question:* "Ready to see your hero?"
+*(Uses Gemini to prompt Imagen 3 based on all previous choices)*
+*   [Generate Realistic Portrait]
+*   [Generate Stylized/Painted Portrait]
+*   [Generate Pixel Art] (Retro Style)
+
+### The Companion's Auto-gen  Character Flow
+
+**The Companion** creates an fully auto-generated character based on the user's preferences.
+
+### Step 1: Set the Tone
+*Question:* "What is the tone of your campaign?"
+*   [High Fantasy / Heroic Fantasy] (Standard D&D, Heroes vs Evil)
+*   [Dark Fantasy / Gothic Horror] (Gritty, Ravenloft/Witcher style)
+*   [Epic / Mythic Fantasy] (Save the World, Theros/Gods)
+*   [Political Intrigue & Mystery] (City-based, Eberron/Candlekeep)
+*   [Low Fantasy / Sword & Sorcery] (Rare Magic, Gritty Survival)
+*   [Specialized (Swashbuckling / War)] (Pirates, Military)
+*   *[Custom Input]*
+
+### Step 2: Choose Your Class
+*Question:* "What adventurer class defines your style?"
+*   [Barbarian]
+*   [Bard]
+*   [Cleric]
+*   [Druid]
+*   [Fighter]
+*   [Monk]
+*   [Paladin]
+*   [Ranger]
+*   [Rogue]
+*   [Sorcerer]
+*   [Warlock]
+*   [Wizard]
+*   *[Custom Input]*
+
+### Step 3: Level
+*Question:* "What level is this character starting at?"
+*   [Level 1]
+*   [Level 3]
+*   [Level 5]
+*   *[Custom Input: 1-20]*
+
+### Step 4: Generate
+*Action:* **The Companion** creates your full character sheet.
+*   **Auto-Portrait:** The AI generates a unique portrait based on your Tone, Class, and Species inputs.
+
 ---
 
-## Appendix: Example Character Data Structure (D&D 2024 Model)
+## Example Character Data Structure (D&D 2024 Model)
 
-*Note: This represents the backend JSON model visualized as Markdown.*
+*Note: This represents the backend data where basic information is stored ias a JSON file. This is the format that the system uses to store the character.*
 
-```markdown
-# Character Sheet: Thorn 'Bug-Eater'
-**Class:** Druid (Circle of Spores)  |  **Level:** 3  |  **Species:** Wood Elf
-**Background:** Guide  |  **Alignment:** Chaotic Neutral  |  **XP:** 900
-
-## Core Statistics
-| Stat | Score | Mod | Save Prof? |
-|:---:|:---:|:---:|:---:|
-| **STR** | 10 | +0 | [ ] |
-| **DEX** | 14 | +2 | [ ] |
-| **CON** | 14 | +2 | [ ] |
-| **INT** | 12 | +1 | [x] (+3) |
-| **WIS** | 16 | +3 | [x] (+5) |
-| **CHA** | 8 | -1 | [ ] |
-
-## Vitals
-*   **HP:** 24 / 24  (Hit Dice: 3d8)
-*   **AC:** 14 (Leather + Shield)
-*   **Initiative:** +2
-*   **Speed:** 35 ft. (30 Base + 5 Wood Elf)
-*   **Passive Perception:** 15
-*   **Proficiency Bonus:** +2
-
-## Death Saves
-*   **Successes:** [ ] [ ] [ ]
-*   **Failures:**  [ ] [ ] [ ]
-
-## Features & Feats
-### Class Features
-*   **Druidic:** You know Druidic.
-*   **Primal Order (Warden):** Proficiency in Medium Armor.
-*   **Wild Shape:** Transform into beasts (CR 1/4).
-*   **Circle of Spores:** Halo of Spores (Reaction 1d4 dmg), Symbiotic Entity (Temp HP + Dmg).
-
-### Origin Feat (Background: Guide)
-*   **Magic Initiate (Druid):** Learn 2 Cantrips, 1 Level 1 Spell.
-
-### Species Traits (Wood Elf)
-*   **Darkvision:** 60 ft.
-*   **Fey Ancestry:** Adv vs Charm, immune to sleep magic.
-*   **Trance:** 4 hour long rest.
-
-## Proficiencies
-*   **Armor:** Light, Medium, Shields.
-*   **Weapons:** Simple Weapons, Scimitar, Shortsword, Longbow.
-*   **Tools:** Herbalism Kit, Cartographer's Tools.
-*   **Saving Throws:** Intelligence, Wisdom.
-*   **Skills:**
-    *   [x] Survival (+5)
-    *   [x] Perception (+5)
-    *   [x] Nature (+3)
-    *   [x] Stealth (+4)
-*   **Languages:** Common, Elvish, Druidic, Sylvan.
-
-## Actions & Attacks
-| Name | Bonus | Damage | Type | Mastery/Properties |
-|:---|:---:|:---|:---|:---|
-| **Scimitar** | +4 | 1d6 + 2 | Slashing | Nick, Light, Finesse |
-| **Longbow** | +4 | 1d8 + 2 | Piercing | Slow, Ammunition (150/600), Two-Handed |
-| **Produce Flame** | +5 | 1d8 | Fire | Range 30ft |
-| **Halo of Spores**| DC 13 | 1d4 | Necrotic | Reaction (Start of creature's turn) |
-
-## Spells (Spellcasting Ability: Wisdom)
-**Spell Save DC:** 13  |  **Spell Attack:** +5
-**Prepared Spells:** 5
-
-*   **Cantrips:** Chill Touch, Druidcraft, Shillelagh, Guidance (Origin), Starry Wisp (Origin).
-*   **Level 1 (4 Slots):** Entangle, Cure Wounds, Thunderwave, Goodberry (Origin).
-*   **Level 2 (2 Slots):** Spike Growth, Wither and Bloom.
-
-## Inventory
-**Currency:** 15 GP, 4 SP
-
-*   **Gear:** Leather Armor, Shield (Wooden), Scimitar, Longbow, Explorer's Pack, Druidic Totem (Sprig of Mistletoe).
-*   **Magic Items:** None.
-
-## Bio & Roleplay
-*   **Traits:** I talk to bugs more than people.
-*   **Ideal:** Balance – nature gives and takes.
-*   **Bond:** I must protect the spore grove from the approaching city.
-*   **Flaw:** I assume everyone civilized is corrupt.
-*   **Appearance:** Messy moss-green hair, clothes covered in lichen.
+```json
+{
+  "core_info": {
+    "name": "Character Name",
+    "class": "Class",
+    "subclass": "Subclass",
+    "level": 1,
+    "species": "Species",
+    "background": "Background",
+    "alignment": "Neutral Good",
+    "xp": 0
+  },
+  "vitals": {
+    "armor_class": 10,
+    "initiative": 0,
+    "speed": 30,
+    "hp_max": 10,
+    "hp_current": 10,
+    "hp_temp": 0,
+    "hit_dice_total": "1d10",
+    "hit_dice_current": 1,
+    "proficiency_bonus": 2,
+    "passive_perception": 10,
+    "heroic_inspiration": false,
+    "conditions": [],
+    "exhaustion_level": 0
+  },
+  "abilities": {
+    "str": { "score": 10, "modifier": 0 },
+    "dex": { "score": 10, "modifier": 0 },
+    "con": { "score": 10, "modifier": 0 },
+    "int": { "score": 10, "modifier": 0 },
+    "wis": { "score": 10, "modifier": 0 },
+    "cha": { "score": 10, "modifier": 0 }
+  },
+  "saves": {
+    "str_save": false,
+    "dex_save": false,
+    "con_save": false,
+    "int_save": false,
+    "wis_save": false,
+    "cha_save": false
+  },
+  "skills": {
+    "acrobatics": 0,
+    "animal_handling": 0,
+    "arcana": 0,
+    "athletics": 0,
+    "deception": 0,
+    "history": 0,
+    "insight": 0,
+    "intimidation": 0,
+    "investigation": 0,
+    "medicine": 0,
+    "nature": 0,
+    "perception": 0,
+    "performance": 0,
+    "persuasion": 0,
+    "religion": 0,
+    "sleight_of_hand": 0,
+    "stealth": 0,
+    "survival": 0
+  },
+  "proficiencies": {
+    "languages": ["Common"],
+    "armor": ["Light", "Medium", "Shields"],
+    "weapons": ["Simple", "Martial"],
+    "tools": []
+  },
+  "spellcasting": {
+    "ability": "Int",
+    "save_dc": 13,
+    "attack_bonus": 5,
+    "slots": {
+      "1": { "total": 2, "used": 0 },
+      "2": { "total": 0, "used": 0 },
+      "3": { "total": 0, "used": 0 }
+    }
+  },
+  "inventory": {
+    "currency": {
+      "cp": 0,
+      "sp": 0,
+      "ep": 0,
+      "gp": 10,
+      "pp": 0
+    },
+    "items": [
+      { "name": "Backpack", "quantity": 1, "equipped": false },
+      { "name": "Bedroll", "quantity": 1, "equipped": false },
+      { "name": "Rations", "quantity": 5, "equipped": false },
+      { "name": "Rope (Hemp)", "quantity": 1, "equipped": false }
+    ]
+  },
+  "appearance": "",
+  "backstory": "",
+  "personality": ""
+}
 ```
+
+---
+
+### System Prompt for The Companion (D&D 2024)
+
+*Note: This is the system instruction sent to the LLM to control its behavior and ensure rules compliance.*
+
+> **System Instruction:**
+>
+> You are **The Companion**, an expert Dungeon Master assistant and rules lawyer powered by the **Dungeons & Dragons 2024 (5.5 Edition)** ruleset.
+>
+> **Your Core Context:**
+> 1.  **Character State:** You have read-access to the user's active JSON character sheet (Class, Level, Stats, Inventory).
+> 2.  **Adventure Memory:** You can search the vector database of the user's Session Notes for plot details.
+>
+> **Your Directives:**
+> *   **Rules Priority:** ALWAYS use the 2024 Player's Handbook rules. Do not use 2014 rules unless explicitly asked.
+> *   **Be Concise:** Give the answer first. Cite the page number/chapter if possible.
+> *   **Do The Math:** Never say "roll a d20 and add your modifier". Say "Roll +5 (Str)".
+> *   **Tables:** Format lists of items, spells, or abilities in Markdown tables for readability.
+> *   **Tone:** Helpful, objective, but immersive. You are a magical tome come to life.
+>
+> **Capabilities:**
+> *   If asked about a spell, check if the user has it prepared/known.
+> *   If asked "Can I afford this?", check the `currency` field in the JSON.
+> *   If asked "Where did we meet the Goblin King?", query the campaign notes.
+
+### Technical Appendix: AI Cost Analysis (Gemini Models)
+
+**Strategy:** Maximize usage of **Gemini 1.5 Flash** for high-volume tasks (Chat, Rules, State Updates) due to its extreme efficiency, preserving margins while offering generous Free/Player limits.
+
+#### 1. Token Usage Estimates (Per Interaction)
+*   **Input Context:** ~3,000 Tokens (System Prompt + JSON Sheet + relevant Adventure Notes).
+*   **Output Response:** ~200 Tokens (Average DM response length).
+
+#### 2. Cost Assumptions (Gemini 1.5 Flash)
+*   **Input Cost:** ~$0.0375 per 1 million tokens.
+*   **Output Cost:** ~$0.15 per 1 million tokens.
+*   **Cached Context:** Significantly lower for repated queries (e.g. Chat history).
+*   **Est. Cost Per Interaction:** ~$0.00014 USD (approx 1/70th of a cent).
+
+#### 3. Margin Analysis per User
+| Tier | Usage Limit | Est. AI Cost | Monthly Price | Margin |
+| :--- | :--- | :--- | :--- | :--- |
+| **Free Tier** | 50 Lifetime | **$0.007** (Total) | $0.00 | **Excellent CAC** |
+| **Player Tier** | 500 / Month | **$0.07** / Month | $5.00 | **~98%** |
+| **Gamemaster** | ~2,000 (Est) | **$0.28** / Month | $15.00 | **~98%** |
+
+*Conclusion:* The economics of Gemini 1.5 Flash allow us to offer "Unlimted-feeling" caps (500) and actual Unlimited tiers with negligible impact on margins.
