@@ -33,6 +33,53 @@ Authorization: Bearer <SUPABASE_ACCESS_TOKEN>
 
 ## 2. Character Management
 
+
+### Community Library Search
+
+Search for public characters. Returns a flattened "Card View" (no heavy JSON).
+
+* **Endpoint:** `GET /library/characters`
+* **Query Params:**
+    * `q` (string): Fuzzy search (Name, Archetype, Description).
+    * `tags` (string): Comma-separated tags (AND logic).
+    * `min_level` (number)
+    * `max_level` (number)
+    * `class` (string): Filter by class name.
+    * `author` (uuid): Filter by User ID.
+    * `page` (number): Default 1.
+    * `limit` (number): Default 24.
+* **Auth Required:** No (Public)
+
+**Response (200 OK):**
+
+```json
+{
+  "data": [
+    {
+      "id": "123e4567-e89b-12d3-a456-426614174000",
+      "name": "Gandalf",
+      "totalLevel": 10,
+      "species": "Human",
+      "archetype": "Wizard",
+      "description": "A wise wizard.",
+      "tags": ["magic", "ranged"],
+      "userId": "author-uuid",
+      "updatedAt": "2023-11-01T12:00:00Z",
+      "class_summary": "Wizard 10",
+      "classes": [
+          { "className": "Wizard", "classLevel": 10, "subclass": "Evocation" }
+      ]
+    }
+  ],
+  "pagination": {
+      "total": 1,
+      "page": 1,
+      "limit": 24,
+      "pages": 1
+  }
+}
+```
+
 ### List User Characters (Search)
 
 Returns a summary list of all characters owned by the authenticated user. Supports filtering.

@@ -54,6 +54,12 @@ The API must verify the `Authorization: Bearer <token>` header on every protecte
     4.  **AI Call:** Send context + user message to Gemini 1.5.
     5.  **Response:** Return AI answer + source citations.
 
+#### **GET** `/library/characters`
+- Public endpoint for the "Community Library".
+- Returns a flattened "Card View" (id, name, level, archetype, description, tags, class summary).
+- **Optimization**: Explicitly excludes `sheet_data` JSONB column to reduce payload size.
+- **Filtering**: Supports fuzzy text (`q`), exact tags (`hasEvery`), level range, and class filtering.
+
 #### **POST** `/api/characters/save`
 * **Input:** `{ characterData: JSON }`
 * **Logic:**
