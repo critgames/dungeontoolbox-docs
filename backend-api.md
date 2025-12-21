@@ -147,7 +147,7 @@ Permanently deletes a character.
 
 ### Roll Dice
 
-Performs a server-side RNG roll, applies modifiers, saves the log, and **broadcasts** the result via Supabase Realtime.
+**Description:** Performs a server-side RNG roll using the **Universal Dice Syntax**. Supports standard notation (`1d20+5`) and advanced mechanics (`kh`, `dl`, `!`, `r`). If `characterId` is provided without a `formula`, it calculates the formula based on the character's stats.
 
 * **Endpoint:** `POST /dice/roll`
 * **Auth Required:** Yes
@@ -156,25 +156,36 @@ Performs a server-side RNG roll, applies modifiers, saves the log, and **broadca
 
 ```json
 {
-  "characterId": "uuid-string",
-  "type": "skill", // "skill" | "save" | "attack" | "damage" | "raw"
-  "stat": "athletics", // skill name, ability name, or "1d8+2"
-  "advantage_state": "normal" // "normal" | "advantage" | "disadvantage"
+  "characterId": "uuid-string", // Optional. Used for context or stat lookup.
+  "stat": "athletics",          // Optional. If provided, calculates formula from Character sheet.
+  "formula": "2d6kh1 + 5",      // Optional. Overrides stat. Syntax: NdS[modifiers] (e.g. 4d6kh3, 1d20+5, 2d6!)
+  "roll_mode": "normal"         // Optional: "normal" | "advantage" | "disadvantage"
 }
-
 ```
 
 **Response (200 OK):**
 
 ```json
 {
-  "result": 19,
-  "natural": 14,
-  "modifier": 5,
-  "is_crit": false,
-  "broadcast_sent": true
+  "formula": "2d6kh1 + 5",
+  "result": 11,
+  "breakdown": [
+    {
+      "type": "dice",
+      "notation": "2d6kh1",
+      "rolls": [2, 6],
+      "kept": [6],
+      "dropped": [2],
+      "subtotal": 6
+    },
+    {
+      "type": "static",
+      "value": 5,
+      "subtotal": 5
+    }
+  ],
+  "rolls_meta": [] // Populated if advantage/disadvantage was used (contains [RollA, RollB])
 }
-
 ```
 
 *Note: The frontend should listen to `supabase.channel('room_characterID')` to display the visual roll.*

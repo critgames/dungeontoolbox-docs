@@ -66,7 +66,22 @@ The API must verify the `Authorization: Bearer <token>` header on every protecte
 * **Logic:**
     1.  Calculate roll (Server-side RNG).
     2.  Save result to `game_logs` table (Audit trail).
+    2.  Save result to `game_logs` table (Audit trail).
     3.  **Broadcast:** Use `@supabase/supabase-js` admin client to push a "Broadcast" event to the specific `room_id` channel so all clients see the roll.
+
+### 2.4 The Universal Dice Syntax (Logic Layer)
+
+The API implements a robust recursive parser for dice formulas, supporting complex mechanics beyond simple arithmetic.
+
+**Features:**
+*   **Atomic Structure:** `[Count]d[Sides][Modifiers]`
+*   **Keep/Drop:** `kh` (Keep Highest), `kl` (Keep Lowest), `dh` (Drop Highest), `dl` (Drop Lowest). Example: `4d6kh3`.
+*   **Exploding:** `!` (Reroll if max).
+*   **Reroll:** `r{target}` (Reroll if equal to target).
+*   **Meta-State:** Handles Advantage (Run Twice, Keep High) and Disadvantage (Run Twice, Keep Low) at the "Instance" level.
+
+**JSON Output:**
+Returns a detailed log of every die rolled, kept, dropped, and summed, ensuring full transparency for the VTT.
 
 ---
 
