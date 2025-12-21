@@ -107,6 +107,7 @@ Once a character is selected from the Dashboard, the user enters the main "Activ
     *   **Displays:** Free-form Session Notes and a structured Quest Log.
 
 ### Tools & Utilities
+*   **Universal Dice Roller:** A global 3D roller that accepts complex formulas (e.g., `4d6kh3 + 2`) via a command bar. Supports standard RPG notation (infix), exploding dice (`!`), and keep/drop mechanics.
 *   **Context-Aware Dice Roller:** Click any stat to roll. The AI adds modifiers automatically.
 *   **Printable PDF Export:** Generate a classic-style character sheet for physical table play.
 
@@ -550,3 +551,78 @@ Account settings and personalization.
 | **Gamemaster** | 5,000 (Hidden) | **$0.70** / Month | $15.00 | **~95%** |
 
 *Conclusion:* The economics of Gemini 1.5 Flash allow us to offer "Unlimted-feeling" caps (1,000) and actual Unlimited tiers with negligible impact on margins.
+
+### Technical Appendix: Universal Dice Syntax
+
+**Context:** The parser must accept a string (formula) and evaluate it mathematically. It support standard RPG notation (infix notation).
+
+#### 1. The Atomic Structure (The "Term")
+Every valid formula is built from "Terms" combined with operators.
+A basic term follows the pattern: `[Count]d[Sides][Modifiers]`
+*   **Count (Optional):** Integer. The number of dice to roll. Defaults to 1 if omitted (e.g., `d20 = 1d20`).
+*   **Separator:** The character `d` or `D`.
+*   **Sides:** Integer. The number of faces on the die.
+*   **Special Case:** `%` represents 100 (e.g., `1d% = 1d100`).
+
+#### 2. Valid Formula Types
+
+**Level 1: Basic Arithmetic (D&D Standard)**
+*   `d20`: Single die. Generate random integer [1, 20].
+*   `2d6`: Multiple same dice. Generate two [1, 6] integers and sum them.
+*   `1d20+5`: Static Modifier (Add). Roll 1d20, then add 5.
+*   `1d8-1`: Static Modifier (Sub). Roll 1d8, then subtract 1.
+*   `1d4+1d6`: Compound Dice. Roll 1d4 and 1d6 separately, then sum.
+*   `1d12+3+1d4`: Mixed Expression. Sum 1d12, static 3, and 1d4.
+
+**Level 2: Advanced Mechanics (System Agnostic)**
+*   `k` / `kh` **(Keep Highest):** Roll N dice, sort them, keep the top X values. (e.g., `4d6kh3`).
+*   `kl` **(Keep Lowest):** Roll N dice, sort them, keep the bottom X values. (e.g., `2d20kl1` for Disadvantage).
+*   `d` / `dl` **(Drop Lowest):** Roll N dice, remove the bottom X values. (Same as kh, e.g., `4d6dl1`).
+*   `dh` **(Drop Highest):** Roll N dice, remove the top X values. (e.g., `2d20dh1` for Disadvantage).
+*   `!` **(Explode):** If a die rolls max value, roll again and add. (e.g., `3d6!`).
+*   `r` **(Reroll):** If a die rolls X, ignore and roll again once. (e.g., `2d6r1`).
+*   `ro` **(Reroll Once):** Same as above but prevents infinite loops.
+
+#### 3. Formal Grammar (EBNF Representation)
+```ebnf
+expression  ::= term { ("+" | "-") term }
+term        ::= dice_group | number
+dice_group  ::= count "d" sides [ modifier ]
+count       ::= integer
+sides       ::= integer | "%"
+modifier    ::= ( "k" | "d" | "r" | "!" ) integer?
+integer     ::= [0-9]+
+```
+
+#### 4. Edge Cases & Constraints
+*   **Whitespace Agnostic:** `1d20+5` and `1 d 20 + 5` are valid.
+*   **Case Insensitive:** `1D20` and `1d20` are identical.
+*   **Safety Limits:**
+    *   **Max Dice:** 100 (Prevent CPU crash).
+    *   **Max Sides:** 1000.
+*   **Order of Operations:** Standard math rules apply. `1d6 * 2` means "(Roll 1d6) * 2", NOT "Roll a die with (6*2) sides".
+
+#### 5. Expected JSON Output
+The output must be a rich log, not just a number.
+
+```json
+// Input: "4d6kh3 + 2"
+{
+  "formula": "4d6kh3 + 2",
+  "result": 16,
+  "breakdown": [
+    {
+      "type": "dice",
+      "notation": "4d6kh3",
+      "rolls": [3, 6, 5, 1],  // The raw numbers
+      "kept": [3, 6, 5],      // The numbers used after "kh3"
+      "dropped": [1],         // The numbers discarded
+      "subtotal": 14
+    },
+    {
+      "type": "static",
+      "value": 2
+    }
+  ]
+}
+```
