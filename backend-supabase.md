@@ -315,4 +315,8 @@ CREATE INDEX idx_characters_tags ON public.characters USING GIN (tags);
 -- 3. Add index for archetype string search
 CREATE INDEX idx_characters_archetype ON public.characters(archetype);
 
+-- Added Lifetime Usage Column
+ALTER TABLE credits
+ADD COLUMN "lifetime_usage" INTEGER DEFAULT 0;
+
 ```
