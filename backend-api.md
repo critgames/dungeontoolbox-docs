@@ -149,7 +149,7 @@ Permanently deletes a character.
 
 Performs a server-side RNG roll, applies modifiers, saves the log, and **broadcasts** the result via Supabase Realtime.
 
-* **Endpoint:** `POST /game/roll`
+* **Endpoint:** `POST /dice/roll`
 * **Auth Required:** Yes
 
 **Request Body:**
