@@ -80,6 +80,19 @@ Search for public characters. Returns a flattened "Card View" (no heavy JSON).
 }
 ```
 
+### Export Character (JSON)
+
+Download the full character data, including class breakdown, as a JSON file.
+
+* **Endpoint:** `GET /characters/:id/export`
+* **Auth Required:** Yes
+* **Path Params:**
+    *   `id` (UUID, Required)
+
+**Response:**
+*   Returns `application/json` with `Content-Disposition: attachment`.
+*   Body: Full JSON object of the character.
+
 ### Chat with Companion (AI)
 
 Send a message to "The Companion" (Gemini 1.5 Flash). Deducts 1 Credit per message.
