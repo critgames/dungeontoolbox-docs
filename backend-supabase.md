@@ -16,6 +16,9 @@ Stores player characters.
 | `species` | Text | Character Species (formerly race) |
 | `background` | Text | Character Background |
 | `alignment` | Text | Character Alignment |
+| `archetype` | Text | User defined Class Identity |
+| `description` | Text | Elevator Pitch |
+| `tags` | Text[] | Keywords (Searchable) |
 | `xp` | Int | Experience Points |
 | `data` | JSONB | Full Character Sheet Data |
 | `created_at` | Timestamptz | Creation Date |
@@ -298,4 +301,18 @@ ALTER TABLE public.characters
 -- 4. Add an index for XP 
 -- (Useful if you ever want a leaderboard like "High Score" or "Most Experienced")
 CREATE INDEX IF NOT EXISTS idx_characters_xp ON public.characters(xp);
-  ```
+
+-- 1. Add the metadata columns
+ALTER TABLE public.characters
+  ADD COLUMN archetype text, -- "The user-defined 'Class Identity'"
+  ADD COLUMN description text, -- "The elevator pitch"
+  ADD COLUMN tags text[] DEFAULT '{}'; -- "The keywords"
+
+-- 2. Add an index specifically for the Array Search (GIN Index)
+-- This makes searching for "contains tag 'Peaceful'" lightning fast.
+CREATE INDEX idx_characters_tags ON public.characters USING GIN (tags);
+
+-- 3. Add index for archetype string search
+CREATE INDEX idx_characters_archetype ON public.characters(archetype);
+
+```

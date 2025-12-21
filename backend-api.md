@@ -42,6 +42,8 @@ Returns a summary list of all characters owned by the authenticated user. Suppor
     * `species` (string)
     * `className` (string)
     * `minLevel` (number)
+    * `archetype` (string)
+    * `tags` (string or array of strings)
 * **Auth Required:** Yes
 
 **Response (200 OK):**
@@ -54,6 +56,9 @@ Returns a summary list of all characters owned by the authenticated user. Suppor
       "name": "Grom The Mighty",
       "totalLevel": 3,
       "species": "Half-Orc",
+      "archetype": "Barbarian King",
+      "description": "A fierce warrior seeking his throne.",
+      "tags": ["melee", "king", "angry"],
       "xp": 3500,
       "classes": [
           { "className": "Barbarian", "classLevel": 3, "subclass": "Totem Warrior" }
@@ -80,6 +85,9 @@ Retrieves the full JSON sheet for a specific character.
   "name": "Grom The Mighty",
   "totalLevel": 3,
   "species": "Half-Orc",
+  "archetype": "Barbarian King",
+  "description": "A fierce warrior seeking his throne.",
+  "tags": ["melee", "king", "angry"],
   "xp": 3500,
   "sheet_data": {
     "core": { "background": "Soldier" },
@@ -112,6 +120,9 @@ Creates a new character. Supports Multi-classing.
   "species": "Dwarf",
   "background": "Blacksmith",
   "xp": 6500,
+  "archetype": "Iron Defender",
+  "description": "A stalwart defender of the mines.",
+  "tags": ["tank", "dwarf", "metal"],
   "classes": [
       { "className": "Fighter", "classLevel": 3, "isPrimary": true },
       { "className": "Cleric", "classLevel": 2 }
@@ -144,6 +155,7 @@ Updates specific fields in the character sheet. Logic layer validates rules (e.g
 {
   "total_level": 6,
   "xp": 14000,
+  "tags": ["tank", "dwarf", "metal", "hero"],
   "sheet_data": {
     "vitals": { "hp_current": 15 }
   }

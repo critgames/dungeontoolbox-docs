@@ -46,7 +46,7 @@ Crit Games is dedicated to modernizing the tabletop experience, building digital
 | **P0** | D&D Beyond Import | System must import character data (JSON/PDF) from D&D Beyond. | Free ($0/mo) |
 | **P0** | Universal Dice Roller | System must provide a simple, persistent 3D/Digital dice roller overlay available on all application views. | Free ($0/mo) |
 | **P0** | Character Dashboard | A visual landing page displaying all user characters with portraits and names, allowing one-click selection to "Enter Play". | Free ($0/mo) |
-| **P0** | Community Library | System must provide a searchable library of community-generated characters. Level 1 characters are **Auto-Shared** by default (Opt-out available). | Free ($0/mo) |
+| **P0** | Community Library | System must provide a searchable library (by **Tags, Archetype, Class**) of community-generated characters. Level 1 characters are **Auto-Shared** by default (Opt-out available). | Free ($0/mo) |
 | **P1** | Print to PDF | System must generate a printable, formatted character sheet PDF. | Player/GM |
 | **P1** | Context-Aware Click-to-Roll | Users can touch/click character sheet stats (Initiative, Skills, Saves) to instantly trigger a roll with correct modifiers. | Free ($0/mo) |
 | **P2** | Priority Access | Users must receive early access to new features. | Player/GM |
@@ -149,7 +149,7 @@ Account settings and personalization.
 
 **Persona:** Alex, a first-time D&D player.
 
-1. **Discovery:** Alex finds **RPG Player Character** on dungeontoolbox.com while looking for help building a Druid.
+1. **Discovery:** Alex finds **RPG Player Character** on dungeontoolbox.com. He browses the "Community Library" searching for "Spooky Druid" tags.
 2. **Onboarding:** Alex signs up for the Free Tier.
 3. **Creation:** Alex selects "Create New Character." **The Companion** asks, "What kind of Druid do you imagine?" Alex types, "A spooky swamp druid who loves insects."
 4. **The Assist:** **The Companion** suggests appropriate stats, a "Circle of Spores" subclass, and a background. Alex clicks "Approve."
@@ -234,7 +234,12 @@ Account settings and personalization.
 
 **The Companion** guides the user through these decisions. At every step, the user can select a pre-defined option or type a custom request.
 
-### Step 1: Choose Your Class
+### Step 1: Choose Archetype (New)
+*Question:* "What is the 'Vibe' or 'Archetype' of this character?"
+*   [Suggestions] ("Oathbreaker Tank", "Bladesinger Duelist", "Support Cleric")
+*   *[Custom Input]*
+
+### Step 2: Choose Your Class
 *Question:* "What adventurer class defines your style?"
 *   [Barbarian]
 *   [Bard]
@@ -250,7 +255,7 @@ Account settings and personalization.
 *   [Wizard]
 *   *[Custom Input]*
 
-### Step 2: Choose Your Species
+### Step 3: Choose Your Species
 *Question:* "What is your heritage?"
 *   [Aasimar]
 *   [Dragonborn]
@@ -264,7 +269,7 @@ Account settings and personalization.
 *   [Tiefling]
 *   *[Custom Input]*
 
-### Step 3: Choose Your Background
+### Step 4: Choose Your Background
 *Question:* "Where did you come from? (Grants Ability Scores & Feat)"
 *   [Acolyte] (Int/Wis/Cha)
 *   [Artisan] (Str/Dex/Int)
@@ -284,7 +289,7 @@ Account settings and personalization.
 *   [Wayfarer] (Dex/Wis/Cha)
 *   *[Custom Input]*
 
-### Step 4: Choose Languages (If Applicable)
+### Step 5: Choose Languages (If Applicable)
 *Question:* "What languages do you speak?"
 *   [Common] (Default)
 *   [Elvish]
@@ -296,20 +301,20 @@ Account settings and personalization.
 *   [Druidic] (Druid)
 *   *[Custom Input]*
 
-### Step 5: Ability Scores
+### Step 6: Ability Scores
 *Question:* "How should we generate your stats?"
 *   [Standard Array] (15, 14, 13, 12, 10, 8)
 *   [Point Buy] (27 Points)
 *   [Manual Input]
 
-### Step 6: Equipment
+### Step 7: Equipment
 *Question:* "What gear do you start with?"
 *   [Starting Gold]
 *   [Class Config A] (Default Weapons/Pack)
 *   [Class Config B] (Alternative options)
 *   *[Custom Input]*
 
-### Step 7: Choose Spells (If Applicable)
+### Step 8: Choose Spells (If Applicable)
 *Question:* "What magic do you wield?"
 *   [Recommended List] (Role-based AI selection)
 *   [Attack Focus] (Damage spells)
@@ -317,7 +322,7 @@ Account settings and personalization.
 *   [Support Focus] (Healing/Protection spells)
 *   *[Custom Input]*
 
-### Step 8: Choose Alignment
+### Step 9: Choose Alignment
 *Question:* "What is your moral compass?"
 *   [Lawful Good]
 *   [Neutral Good]
@@ -329,27 +334,27 @@ Account settings and personalization.
 *   [Neutral Evil]
 *   [Chaotic Evil]
 
-### Step 9: Appearance (Optional)
+### Step 10: Appearance (Optional)
 *Question:* "What do you look like?"
 *   [Generate Portrait Description] (Based on Class/Species/Tone)
 *   [Visualize specific feature] ("A scar", "Glowing eyes")
 *   *[Custom Input]*
 
-### Step 10: Backstory (Optional)
+### Step 11: Backstory (Optional)
 *Question:* "What is your history?"
 *   [Generate from Background] (Uses Step 3 Choice)
 *   [Generate Tragic Event]
 *   [Generate Heroic Origin]
 *   *[Custom Input]*
 
-### Step 11: Personality (Optional)
+### Step 12: Personality (Optional)
 *Question:* "Who are you?"
 *(Generates 2024-compliant Traits, Ideals, Bonds, and Flaws linked to Background)*
 *   [Generate Suggested Traits]
 *   [Select Archetype] (e.g., "The Grumpy Mentor", "The Naive Hero")
 *   *[Custom Input]*
 
-### Step 12: Generate Portrait
+### Step 13: Generate Portrait
 *Question:* "Ready to see your hero?"
 *(Uses Gemini to prompt Imagen 3 based on all previous choices)*
 *   [Generate Realistic Portrait]
@@ -413,7 +418,17 @@ Account settings and personalization.
     "species": "Species",
     "background": "Background",
     "alignment": "Neutral Good",
-    "xp": 0
+    "name": "Character Name",
+    "class": "Class",
+    "subclass": "Subclass",
+    "level": 1,
+    "species": "Species",
+    "background": "Background",
+    "alignment": "Neutral Good",
+    "xp": 0,
+    "archetype": "Oathbreaker Tank",
+    "tags": ["edgy", "tank", "support"],
+    "description": "A bard silenced by war, now finding music in the clash of steel."
   },
   "vitals": {
     "armor_class": 10,
@@ -472,6 +487,31 @@ Account settings and personalization.
     "weapons": ["Simple", "Martial"],
     "tools": []
   },
+  
+  // 1. CLASS FEATURES, SPECIES TRAITS, & FEATS (Consolidated)
+  "features": [
+    {
+      "name": "Darkvision",
+      "source": "Species",
+      "type": "passive",
+      "description": "You can see in dim light within 60 feet..."
+    },
+    {
+      "name": "Second Wind",
+      "source": "Fighter 1",
+      "type": "action", 
+      "uses": { "max": 1, "current": 1, "reset": "short" },
+      "description": "Regain 1d10+1 HP on your turn."
+    },
+    {
+      "name": "Keen Mind",
+      "source": "Feat",
+      "type": "passive",
+      "description": "You always know which way is north..."
+    }
+  ],
+
+  // 2. SPELLS (The Spellbook)
   "spellcasting": {
     "ability": "Int",
     "save_dc": 13,
@@ -480,23 +520,69 @@ Account settings and personalization.
       "1": { "total": 2, "used": 0 },
       "2": { "total": 0, "used": 0 },
       "3": { "total": 0, "used": 0 }
-    }
+    },
+    "known": [ 
+      {
+        "name": "Fire Bolt",
+        "level": 0,
+        "school": "Evocation",
+        "casting_time": "1 Action",
+        "range": "120 ft",
+        "components": ["V", "S"],
+        "is_attack": true, 
+        "damage": "1d10",
+        "damage_type": "fire"
+      },
+      {
+        "name": "Shield",
+        "level": 1,
+        "casting_time": "1 Reaction", 
+        "prepared": true
+      }
+    ]
   },
+
+  // 3. INVENTORY (Weapons go here!)
   "inventory": {
     "currency": {
-      "cp": 0,
-      "sp": 0,
-      "ep": 0,
-      "gp": 10,
-      "pp": 0
+      "cp": 0, "sp": 0, "ep": 0, "gp": 10, "pp": 0
     },
     "items": [
+      { 
+        "name": "Potion of Healing", 
+        "quantity": 2, 
+        "type": "consumable",
+        "action_type": "action" 
+      },
+      { 
+        "name": "Longsword +1", 
+        "quantity": 1, 
+        "equipped": true,
+        "type": "weapon",
+        "meta": { 
+          "damage": "1d8",
+          "damage_type": "slashing",
+          "properties": ["Versatile (1d10)"],
+          "range": "melee"
+        }
+      },
       { "name": "Backpack", "quantity": 1, "equipped": false },
       { "name": "Bedroll", "quantity": 1, "equipped": false },
       { "name": "Rations", "quantity": 5, "equipped": false },
       { "name": "Rope (Hemp)", "quantity": 1, "equipped": false }
     ]
   },
+
+  // 4. CUSTOM ACTIONS (The "Catch-All")
+  "custom_actions": [
+    {
+      "name": "Unarmed Strike",
+      "action_type": "action",
+      "damage": "1 + @mod:str", 
+      "damage_type": "bludgeoning"
+    }
+  ],
+  
   "appearance": "",
   "backstory": "",
   "personality": ""
