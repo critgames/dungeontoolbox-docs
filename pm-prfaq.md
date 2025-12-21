@@ -39,7 +39,7 @@ Crit Games is dedicated to modernizing the tabletop experience, building digital
 | **P0** | Companion Creation | System must provide **The Companion** to generate full character stats from natural language concepts. | Free ($0/mo) |
 | **P0** | Lifetime AI Limit | **The Companion** is limited to **50 Lifetime Interactions** (Creation Steps or Gameplay Queries) for free users. | Free ($0/mo) |
 | **P0** | Extended Capacity | System must allow creation and storage of up to **12 characters**. | Player ($5/mo) |
-| **P0** | Companion Access | System must provide persistent **Companion** access (capped at 500/mo) for ongoing rules queries and inventory management. | Player ($5/mo) |
+| **P0** | Companion Access | System must provide persistent **Companion** access (capped at 1,000/mo) for ongoing rules queries and inventory management. | Player ($5/mo) |
 | **P0** | Gamemaster Capacity | System must allow **Unlimited Character Storage** for Gamemasters. | GM ($15/mo) |
 | **P0** | Unlimited Companion | System must provide **Unlimited Companion Interactions** for Gamemasters. | GM ($15/mo) |
 | **P0** | Companion Memory | **The Companion** must index and retrieve context from user-provided Adventure Notes/Journals. | Player/GM |
@@ -65,7 +65,7 @@ Crit Games is dedicated to modernizing the tabletop experience, building digital
 | **Dice Roller** | Yes | Yes | Yes |
 | **Click-to-Roll** | Yes | Yes | Yes |
 | **Import** | Yes | Yes | Yes |
-| **The Companion (AI)** | **50 Lifetime** (Trial) | **500 / Month** (High) | **Unlimited** |
+| **The Companion (AI)** | **50 Lifetime** (Trial) | **1,000 / Month** (High) | **Unlimited** |
 | **Creation Mode** | Limited | **Full** | **Full** |
 | **Context Memory** | No | **Yes** | **Yes** |
 | **Export** | Digital Only | **Print to PDF** | **Print to PDF** |
@@ -190,11 +190,11 @@ Account settings and personalization.
 **Q: How does The Companion help me?**
 **A:** **The Companion** is your rules lawyer and creative partner.
 *   **Free:** Trial mode (50 Lifetime Interactions).
-*   **Player ($5):** Serious play (500 Interactions/Month), Context Memory, and 12 Character slots.
+*   **Player ($5):** Serious play (1,000 Interactions/Month), Context Memory, and 12 Character slots.
 *   **Gamemaster ($15):** Unlimited everything. Designed for power users who run games and manage dozens of characters/NPCs.
 
-**Q: Is 500 interactions enough for a Player?**
-**A:** Yes! That’s ~125 interactions per session (assuming 4 games/month). You would have to message the AI every 2 minutes for 4 hours straight to hit that limit. For 99% of players, it feels unlimited.
+**Q: Is 1,000 interactions enough for a Player?**
+**A:** Yes! That’s ~250 interactions per session (assuming 4 games/month). You would have to message the AI every minute for 4 hours straight to hit that limit. For 99.9% of players, it feels unlimited.
 
 **Q: Can I print my character sheet?**
 **A:** The "Print to Sheet" feature, which formats your data into a standard tabletop layout, is available in the $5 Player Tier. Free users can view their character stats digitally on any device.
@@ -218,6 +218,11 @@ Account settings and personalization.
 
 **Q: What is the cost impact of The Companion?**
 **A:** **The Companion** uses a structured chain of prompts. With a strict cap of 50 lifetime requests per free user, our downside risk is capped (e.g., 50 * $0.002 = $0.10 max cost per free user). This serves as a predictable Customer Acquisition Cost (CAC).
+
+**Q: How do we determine the "Hidden Credits" for paid tiers to prevent abuse?**
+**A:** While we market "Unlimited" (GM) or "High Limits" (Player), we enforce technical soft caps to prevent abuse (e.g., script loops or account sharing).
+*   **Player Tier ($5/mo):** Capped at **1,000 requests/month**. safely covers massive usage (30+ queries/day) while keeping AI costs below $0.15/user (keeping gross margin >95%).
+*   **Gamemaster Tier ($15/mo):** Capped at **5,000 requests/month**. Because GMs generate NPCs and world-build, they need 5x the volume. This costs us ~$0.70/user worst-case, preserving our margin while making it technically impossible for a human to hit the limit naturally.
 
 ---
 
@@ -541,7 +546,7 @@ Account settings and personalization.
 | Tier | Usage Limit | Est. AI Cost | Monthly Price | Margin |
 | :--- | :--- | :--- | :--- | :--- |
 | **Free Tier** | 50 Lifetime | **$0.007** (Total) | $0.00 | **Excellent CAC** |
-| **Player Tier** | 500 / Month | **$0.07** / Month | $5.00 | **~98%** |
-| **Gamemaster** | ~2,000 (Est) | **$0.28** / Month | $15.00 | **~98%** |
+| **Player Tier** | 1,000 / Month | **$0.14** / Month | $5.00 | **~97%** |
+| **Gamemaster** | 5,000 (Hidden) | **$0.70** / Month | $15.00 | **~95%** |
 
-*Conclusion:* The economics of Gemini 1.5 Flash allow us to offer "Unlimted-feeling" caps (500) and actual Unlimited tiers with negligible impact on margins.
+*Conclusion:* The economics of Gemini 1.5 Flash allow us to offer "Unlimted-feeling" caps (1,000) and actual Unlimited tiers with negligible impact on margins.
