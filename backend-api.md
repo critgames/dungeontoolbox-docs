@@ -80,6 +80,48 @@ Search for public characters. Returns a flattened "Card View" (no heavy JSON).
 }
 ```
 
+### Chat with Companion (AI)
+
+Send a message to "The Companion" (Gemini 1.5 Flash). Deducts 1 Credit per message.
+
+* **Endpoint:** `POST /companion/chat`
+* **Auth Required:** Yes
+* **Billing:** 1 Credit / Message
+
+**Request Body:**
+
+```json
+{
+  "message": "What is my best spell?",
+  "characterId": "uuid-optional",
+  "mode": "gameplay" // or "creation"
+}
+```
+
+*   **mode**:
+    *   `gameplay`: Requires `characterId`. AI has full access to the character sheet context and acts as a Rules Advisor.
+    *   `creation`: No `characterId` required. AI acts as a Character Builder.
+    *   *Default*: `gameplay` if `characterId` is present, otherwise `creation`.
+
+**Response (200 OK):**
+
+```json
+{
+  "reply": "Based on your Intelligence of 18, Fireball is your best option...",
+  "sources": ["Gemini 1.5 Flash"],
+  "remaining_credits": 49
+}
+```
+
+**Response (402 Payment Required):**
+
+```json
+{
+  "error": "Quota Exceeded",
+  "message": "Not enough credits."
+}
+```
+
 ### List User Characters (Search)
 
 Returns a summary list of all characters owned by the authenticated user. Supports filtering.

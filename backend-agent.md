@@ -96,3 +96,10 @@ When responding to a task:
 > **Plan:** Validate spell slot availability -> Deduct slot -> Calculate effect -> Broadcast result -> Return new state.
 > **Code:** [TypeScript Code Block]
 > **Best Practice Check:** Verified user ownership; Used atomic transaction for slot deduction.
+
+### C. Companion Chat Logic
+*   **Modes**:
+    *   **Creation**: Pure brainstorming. System Prompt: "Expert Character Builder".
+    *   **Gameplay**: Context-aware. System Prompt: "Rules Advisor".
+*   **Context Merging**: When in Gameplay mode, you MUST merge the top-level metadata (`name`, `species`, `archetype`, `tags`) with the `sheet_data` JSON to ensure the AI sees the full picture.
+*   **Testing**: ALWAYS use `NODE_ENV=test` to force the `AIService` into Mock Mode. Do not burn real credits during tests.
