@@ -14,7 +14,6 @@ All protected routes require a valid **Supabase JWT** in the Authorization heade
 **Header Format:**
 ```http
 Authorization: Bearer <SUPABASE_ACCESS_TOKEN>
-
 ```
 
 **Common HTTP Status Codes:**
@@ -34,11 +33,15 @@ Authorization: Bearer <SUPABASE_ACCESS_TOKEN>
 
 ## 2. Character Management
 
-### List User Characters
+### List User Characters (Search)
 
-Returns a summary list of all characters owned by the authenticated user.
+Returns a summary list of all characters owned by the authenticated user. Supports filtering.
 
 * **Endpoint:** `GET /characters`
+* **Query Params:**
+    * `species` (string)
+    * `className` (string)
+    * `minLevel` (number)
 * **Auth Required:** Yes
 
 **Response (200 OK):**
@@ -49,14 +52,17 @@ Returns a summary list of all characters owned by the authenticated user.
     {
       "id": "123e4567-e89b-12d3-a456-426614174000",
       "name": "Grom The Mighty",
-      "class": "Barbarian",
-      "level": 3,
+      "totalLevel": 3,
+      "species": "Half-Orc",
+      "xp": 3500,
+      "classes": [
+          { "className": "Barbarian", "classLevel": 3, "subclass": "Totem Warrior" }
+      ],
       "is_public": true,
       "created_at": "2023-10-27T10:00:00Z"
     }
   ]
 }
-
 ```
 
 ### Get Character Details
@@ -72,21 +78,26 @@ Retrieves the full JSON sheet for a specific character.
 {
   "id": "123e4567-e89b-12d3-a456-426614174000",
   "name": "Grom The Mighty",
+  "totalLevel": 3,
+  "species": "Half-Orc",
+  "xp": 3500,
   "sheet_data": {
-    "core": { "race": "Human", "background": "Soldier" },
+    "core": { "background": "Soldier" },
     "stats": { "str": 16, "dex": 12, "con": 14, "int": 8, "wis": 10, "cha": 12 },
     "vitals": { "hp_current": 25, "hp_max": 25 },
     "inventory": []
   },
+  "classes": [
+      { "className": "Barbarian", "classLevel": 3, "isPrimary": true }
+  ],
   "owner_id": "user_uuid",
   "is_public": true
 }
-
 ```
 
 ### Create Character
 
-Creates a new character.
+Creates a new character. Supports Multi-classing.
 **Constraint:** Checks if Free Tier user has < 6 characters. If limit reached, returns `403`.
 
 * **Endpoint:** `POST /characters`
@@ -97,13 +108,18 @@ Creates a new character.
 ```json
 {
   "name": "New Hero",
-  "class": "Fighter",
-  "level": 1,
+  "total_level": 5,
+  "species": "Dwarf",
+  "background": "Blacksmith",
+  "xp": 6500,
+  "classes": [
+      { "className": "Fighter", "classLevel": 3, "isPrimary": true },
+      { "className": "Cleric", "classLevel": 2 }
+  ],
   "sheet_data": {
-    "core": { "race": "Dwarf", "background": "Blacksmith" }
+    "vitals": { "hp_current": 45 }
   }
 }
-
 ```
 
 **Error (403 Forbidden):**
@@ -113,7 +129,6 @@ Creates a new character.
   "error": "Limit Reached",
   "message": "Free tier users are limited to 6 characters. Please upgrade."
 }
-
 ```
 
 ### Update Character (Partial)
@@ -127,11 +142,12 @@ Updates specific fields in the character sheet. Logic layer validates rules (e.g
 
 ```json
 {
+  "total_level": 6,
+  "xp": 14000,
   "sheet_data": {
     "vitals": { "hp_current": 15 }
   }
 }
-
 ```
 
 ### Delete Character
@@ -205,7 +221,6 @@ Applies healing logic, resets spell slots, and updates Hit Dice.
   "type": "short", // "short" | "long"
   "hit_dice_spent": 2 // Only for short rest
 }
-
 ```
 
 ---
@@ -227,7 +242,6 @@ Sends a message to the AI. The backend injects character context and performs Ve
   "characterId": "uuid-string", // Optional: Provides context about current hero
   "message": "Can I grapple the ghost?"
 }
-
 ```
 
 **Response (200 OK):**
@@ -238,7 +252,6 @@ Sends a message to the AI. The backend injects character context and performs Ve
   "sources": ["SRD: Conditions", "My Adventure Notes (Session 3)"],
   "remaining_credits": 42
 }
-
 ```
 
 **Error (402 Payment Required):**
@@ -248,7 +261,6 @@ Sends a message to the AI. The backend injects character context and performs Ve
   "error": "Quota Exceeded",
   "message": "You have used all 50 free AI interactions. Upgrade to Player Tier for more."
 }
-
 ```
 
 ### Generate Character (Wizard)
@@ -267,7 +279,6 @@ Generates a full character sheet based on a prompt.
   "tone": "dark_fantasy",
   "level": 1
 }
-
 ```
 
 **Response (200 OK):**
@@ -282,7 +293,6 @@ Generates a full character sheet based on a prompt.
   },
   "portrait_prompt": "A gnarly, moss-covered humanoid..." // Use this to query image gen if needed
 }
-
 ```
 
 ---
@@ -303,7 +313,6 @@ Parses a DDB Character JSON or PDF export and converts it to our schema.
 {
   "ddb_json": { ...the_raw_ddb_data... }
 }
-
 ```
 
 ### Export to PDF
@@ -320,7 +329,6 @@ Generates a printable PDF of the character sheet. This is an async job.
   "characterId": "uuid-string",
   "theme": "classic" // "classic" | "modern"
 }
-
 ```
 
 **Response (202 Accepted):**
@@ -331,7 +339,6 @@ Generates a printable PDF of the character sheet. This is an async job.
   "status": "processing",
   "status_url": "/api/v1/export/status/job_12345"
 }
-
 ```
 
 ### Check Export Status
@@ -348,14 +355,13 @@ Polls the status of the PDF generation job.
   "status": "completed",
   "download_url": "[https://cdn.dungeontoolbox.com/pdfs/grom_sheet.pdf](https://cdn.dungeontoolbox.com/pdfs/grom_sheet.pdf)"
 }
-
 ```
 
 ### Community Library Search
 
 Public route to search shared characters.
 
-* **Endpoint:** `GET /library/search`
+* **Endpoint:** `GET /search/charcters`
 * **Auth Required:** No
 
 **Query Parameters:**
@@ -375,7 +381,6 @@ Public route to search shared characters.
   "page": 1,
   "total": 50
 }
-
 ```
 
 ---
@@ -397,7 +402,6 @@ The backend broadcasts these events to the Supabase Channel `room_{characterId}`
     "breakdown": "1d20 (14) + 5"
   }
 }
-
 ```
 
 ### Event: `vitals_update`
@@ -414,5 +418,4 @@ Sent when HP, Slots, or other dynamic stats change via the API.
     "temp_hp": 0
   }
 }
-
 ```

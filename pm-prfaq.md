@@ -405,7 +405,7 @@ Account settings and personalization.
 
 ```json
 {
-  "core_info": {
+  "core": {
     "name": "Character Name",
     "class": "Class",
     "subclass": "Subclass",

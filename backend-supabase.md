@@ -12,8 +12,11 @@ Stores player characters.
 | `id` | UUID | Primary Key (Default: `gen_random_uuid()`) |
 | `user_id` | UUID | References `auth.users` (Supabase Auth) |
 | `name` | Text | Character Name |
-| `class` | Text | Character Class |
-| `level` | Int | Character Level |
+| `total_level` | Int | Character Total Level |
+| `species` | Text | Character Species (formerly race) |
+| `background` | Text | Character Background |
+| `alignment` | Text | Character Alignment |
+| `xp` | Int | Experience Points |
 | `data` | JSONB | Full Character Sheet Data |
 | `created_at` | Timestamptz | Creation Date |
 | `updated_at` | Timestamptz | Last Update |
@@ -233,4 +236,66 @@ EXECUTE FUNCTION public.update_updated_at_column();
 CREATE INDEX IF NOT EXISTS idx_characters_user_id ON public.characters (user_id);
 CREATE INDEX IF NOT EXISTS idx_game_logs_user_id ON public.game_logs (user_id);
 CREATE INDEX IF NOT EXISTS idx_game_logs_character_id ON public.game_logs (character_id);
-```
+
+-- UPDATE for MUTLI-CLASSING
+-- 1. Update the main characters table to hold "Searchable" Metadata
+-- We rename 'level' to 'total_level' to avoid confusion with class levels
+ALTER TABLE public.characters 
+  RENAME COLUMN level TO total_level;
+
+ALTER TABLE public.characters
+  DROP COLUMN class, -- We are moving this to a new table
+  ADD COLUMN race text, -- Promoted from JSON for fast search
+  ADD COLUMN background text, -- Promoted from JSON
+  ADD COLUMN alignment text; -- Promoted from JSON
+
+-- 2. Create the Multi-Classing Table
+-- This handles: "Wizard 3 (Evocation)" AND "Fighter 2 (Battle Master)"
+CREATE TABLE IF NOT EXISTS public.character_classes (
+  id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  character_id uuid NOT NULL REFERENCES public.characters(id) ON DELETE CASCADE,
+  class_name text NOT NULL, -- e.g. "Wizard"
+  class_level integer NOT NULL DEFAULT 1, -- e.g. 3
+  subclass text, -- e.g. "School of Evocation"
+  is_primary boolean DEFAULT false, -- To mark their "main" class
+  created_at timestamptz DEFAULT now()
+);
+
+-- 3. Add Indexes for High-Speed Search
+-- These make filters like "Find all Wood Elves" or "Find all Wizards" instant.
+CREATE INDEX idx_characters_race ON public.characters(race);
+CREATE INDEX idx_characters_total_level ON public.characters(total_level);
+CREATE INDEX idx_character_classes_name ON public.character_classes(class_name);
+CREATE INDEX idx_character_classes_subclass ON public.character_classes(subclass);
+
+-- 4. Enable RLS on the new table
+ALTER TABLE public.character_classes ENABLE ROW LEVEL SECURITY;
+
+-- Allow public read access to classes (so library search works)
+CREATE POLICY classes_select_public
+  ON public.character_classes FOR SELECT
+  USING (
+    EXISTS (
+      SELECT 1 FROM public.characters 
+      WHERE id = character_classes.character_id 
+      AND (is_public = true OR user_id = auth.uid())
+    )
+  );
+
+  -- 1. Rename 'race' to 'species' (Standardizing for 2024 rules)
+ALTER TABLE public.characters 
+  RENAME COLUMN race TO species;
+
+-- 2. Rename the index for consistency (Optional but good practice)
+-- Only run this if you created the index in the previous step
+ALTER INDEX IF EXISTS idx_characters_race 
+  RENAME TO idx_characters_species;
+
+-- 3. Add the 'xp' column
+ALTER TABLE public.characters 
+  ADD COLUMN xp integer NOT NULL DEFAULT 0;
+
+-- 4. Add an index for XP 
+-- (Useful if you ever want a leaderboard like "High Score" or "Most Experienced")
+CREATE INDEX IF NOT EXISTS idx_characters_xp ON public.characters(xp);
+  ```

@@ -57,9 +57,10 @@ The API must verify the `Authorization: Bearer <token>` header on every protecte
 #### **POST** `/api/characters/save`
 * **Input:** `{ characterData: JSON }`
 * **Logic:**
-    1.  **Rule Check:** Validate that `stats` are within legal limits (e.g., standard array or point buy).
-    2.  **Limit Check:** Count user's existing characters. If `free` tier and count >= 6, throw `403`.
-    3.  **Persist:** Use Prisma to write to `characters` table.
+    1.  **Rule Check:** Validate that `stats` are within legal limits.
+    2.  **Schema Check:** Ensure `species`, `xp`, `total_level` are provided for indexing.
+    3.  **Limit Check:** Count user's existing characters. If `free` tier and count >= 6, throw `403`.
+    4.  **Persist:** Use Prisma to write to `characters` table.
 
 #### **POST** `/api/dice/roll` (Hybrid Realtime)
 * **Input:** `{ characterId, stat: "athletics" }`
