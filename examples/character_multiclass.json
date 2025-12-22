@@ -1,0 +1,378 @@
+{
+    "name": "Valeria the War-Chanter",
+    "species": "Tiefling",
+    "background": "Gladiator",
+    "totalLevel": 12,
+    "alignment": "Chaotic Good",
+    "xp": 100000,
+    "archetype": "College of Valor / Battle Master",
+    "description": "A charismatic warlord-poet clad in gleaming half-plate, conducting battle with a blade in one hand and a horn in the other.",
+    "tags": [
+        "support",
+        "melee",
+        "face",
+        "control"
+    ],
+    "classes": [
+        {
+            "name": "Bard",
+            "level": 9,
+            "isPrimary": true,
+            "subclass": "College of Valor"
+        },
+        {
+            "name": "Fighter",
+            "level": 3,
+            "isPrimary": false,
+            "subclass": "Battle Master"
+        }
+    ],
+    "vitals": {
+        "armor_class": 19,
+        "initiative": 3,
+        "speed": 30,
+        "hp_max": 102,
+        "hp_current": 95,
+        "hp_temp": 10,
+        "hit_dice_total": "9d8 + 3d10",
+        "hit_dice_current": 12,
+        "proficiency_bonus": 4,
+        "passive_perception": 14,
+        "heroic_inspiration": true,
+        "conditions": [],
+        "exhaustion_level": 0
+    },
+    "abilities": {
+        "str": {
+            "score": 14,
+            "modifier": 2
+        },
+        "dex": {
+            "score": 14,
+            "modifier": 2
+        },
+        "con": {
+            "score": 16,
+            "modifier": 3
+        },
+        "int": {
+            "score": 10,
+            "modifier": 0
+        },
+        "wis": {
+            "score": 10,
+            "modifier": 0
+        },
+        "cha": {
+            "score": 20,
+            "modifier": 5
+        }
+    },
+    "saves": {
+        "str_save": false,
+        "dex_save": true,
+        "con_save": false,
+        "int_save": false,
+        "wis_save": false,
+        "cha_save": true
+    },
+    "skills": {
+        "acrobatics": 2,
+        "animal_handling": 2,
+        "arcana": 2,
+        "athletics": 10,
+        "deception": 9,
+        "history": 2,
+        "insight": 4,
+        "intimidation": 13,
+        "investigation": 2,
+        "medicine": 2,
+        "nature": 2,
+        "perception": 4,
+        "performance": 13,
+        "persuasion": 9,
+        "religion": 2,
+        "sleight_of_hand": 2,
+        "stealth": 2,
+        "survival": 2
+    },
+    "features": [
+        {
+            "name": "Bardic Inspiration",
+            "source": "Bard 1",
+            "type": "bonus_action",
+            "uses": {
+                "max": 5,
+                "current": 5,
+                "reset": "short"
+            },
+            "description": "Use a bonus action to give a creature within 60 ft a d8 inspiration die."
+        },
+        {
+            "name": "Jack of All Trades",
+            "source": "Bard 2",
+            "type": "passive",
+            "description": "Add half proficiency bonus to ability checks you aren't proficient in."
+        },
+        {
+            "name": "Song of Rest",
+            "source": "Bard 2",
+            "type": "passive",
+            "description": "Restoring extra 1d8 HP during short rest."
+        },
+        {
+            "name": "Combat Inspiration",
+            "source": "College of Valor",
+            "type": "passive",
+            "description": "Creatures can use Bardic Inspiration die to add to damage or AC."
+        },
+        {
+            "name": "Extra Attack",
+            "source": "Bard 6",
+            "type": "passive",
+            "description": "You can attack twice whenever you take the Attack action on your turn."
+        },
+        {
+            "name": "Fighting Style: Defense",
+            "source": "Fighter 1",
+            "type": "passive",
+            "description": "+1 to AC while wearing armor."
+        },
+        {
+            "name": "Second Wind",
+            "source": "Fighter 1",
+            "type": "bonus_action",
+            "uses": {
+                "max": 1,
+                "current": 1,
+                "reset": "short"
+            },
+            "description": "Regain 1d10+3 HP."
+        },
+        {
+            "name": "Action Surge",
+            "source": "Fighter 2",
+            "type": "action",
+            "uses": {
+                "max": 1,
+                "current": 1,
+                "reset": "short"
+            },
+            "description": "Take one additional action on your turn."
+        },
+        {
+            "name": "Combat Superiority",
+            "source": "Battle Master",
+            "type": "passive",
+            "uses": {
+                "max": 4,
+                "current": 4,
+                "reset": "short"
+            },
+            "description": "You have 4 superiority dice (d8s)."
+        },
+        {
+            "name": "Maneuver: Commander's Strike",
+            "source": "Battle Master",
+            "type": "action",
+            "description": "Forgo one attack to direct an ally to strike."
+        },
+        {
+            "name": "Maneuver: Riposte",
+            "source": "Battle Master",
+            "type": "reaction",
+            "description": "When missed by melee attack, spend die to attack back."
+        }
+    ],
+    "spellcasting": {
+        "ability": "cha",
+        "save_dc": 17,
+        "attack_bonus": 9,
+        "slots": {
+            "1": {
+                "total": 4,
+                "used": 0
+            },
+            "2": {
+                "total": 3,
+                "used": 1
+            },
+            "3": {
+                "total": 3,
+                "used": 0
+            },
+            "4": {
+                "total": 3,
+                "used": 0
+            },
+            "5": {
+                "total": 1,
+                "used": 0
+            }
+        },
+        "known": [
+            {
+                "name": "Vicious Mockery",
+                "level": 0,
+                "casting_time": "1 Action",
+                "range": "60 ft",
+                "damage": "3d4",
+                "damage_type": "psychic",
+                "save": "wis"
+            },
+            {
+                "name": "Minor Illusion",
+                "level": 0,
+                "casting_time": "1 Action",
+                "range": "30 ft"
+            },
+            {
+                "name": "Healing Word",
+                "level": 1,
+                "casting_time": "1 Bonus Action",
+                "range": "60 ft",
+                "damage": "1d4+5",
+                "damage_type": "healing"
+            },
+            {
+                "name": "Thunderwave",
+                "level": 1,
+                "casting_time": "1 Action",
+                "range": "Self (15-ft cube)",
+                "damage": "2d8",
+                "damage_type": "thunder",
+                "save": "con"
+            },
+            {
+                "name": "Hold Person",
+                "level": 2,
+                "casting_time": "1 Action",
+                "range": "60 ft",
+                "save": "wis",
+                "concentration": true
+            },
+            {
+                "name": "Shatter",
+                "level": 2,
+                "casting_time": "1 Action",
+                "range": "60 ft",
+                "damage": "3d8",
+                "damage_type": "thunder",
+                "save": "con"
+            },
+            {
+                "name": "Hypnotic Pattern",
+                "level": 3,
+                "casting_time": "1 Action",
+                "range": "120 ft",
+                "save": "wis",
+                "concentration": true
+            },
+            {
+                "name": "Dispel Magic",
+                "level": 3,
+                "casting_time": "1 Action",
+                "range": "120 ft"
+            },
+            {
+                "name": "Dimension Door",
+                "level": 4,
+                "casting_time": "1 Action",
+                "range": "500 ft"
+            },
+            {
+                "name": "Greater Restoration",
+                "level": 5,
+                "casting_time": "1 Action",
+                "range": "Touch"
+            }
+        ]
+    },
+    "inventory": {
+        "currency": {
+            "gp": 1200,
+            "sp": 45,
+            "cp": 0
+        },
+        "items": [
+            {
+                "name": "Glamoured Studded Leather +1",
+                "quantity": 1,
+                "equipped": false,
+                "type": "armor",
+                "meta": {
+                    "ac": 13,
+                    "category": "Light",
+                    "magic": true
+                }
+            },
+            {
+                "name": "Half Plate",
+                "quantity": 1,
+                "equipped": true,
+                "type": "armor",
+                "meta": {
+                    "ac": 15,
+                    "category": "Medium"
+                }
+            },
+            {
+                "name": "Shield +1",
+                "quantity": 1,
+                "equipped": true,
+                "type": "armor",
+                "meta": {
+                    "ac": 3,
+                    "category": "Shield",
+                    "magic": true
+                }
+            },
+            {
+                "name": "Rapier of Warning",
+                "quantity": 1,
+                "equipped": true,
+                "type": "weapon",
+                "meta": {
+                    "damage": "1d8",
+                    "damage_type": "piercing",
+                    "magic": true,
+                    "properties": [
+                        "Finesse"
+                    ]
+                }
+            },
+            {
+                "name": "Longbow",
+                "quantity": 1,
+                "equipped": false,
+                "type": "weapon",
+                "meta": {
+                    "damage": "1d8",
+                    "damage_type": "piercing",
+                    "properties": [
+                        "Range (150/600)",
+                        "Heavy",
+                        "Two-Handed"
+                    ]
+                }
+            },
+            {
+                "name": "Instrument of the Bards (Mac-Fuirmidh Cittern)",
+                "quantity": 1,
+                "type": "tool",
+                "meta": {
+                    "magic": true,
+                    "attunement": true
+                }
+            },
+            {
+                "name": "Potion of Healing (Greater)",
+                "quantity": 3,
+                "type": "consumable"
+            }
+        ]
+    },
+    "appearance": "Valeria stands tall, her red skin contrasted by polished silver armor. Her horns are decorated with gold rings.",
+    "backstory": "Once a slave fighter in the fighting pits, Valeria won her freedom through a combination of martial prowess and rousing speeches that turned the crowd to her side.",
+    "personality": "I live for the roar of the crowd and the thrill of battle. I am loud, boisterous, and fiercely protective of the weak."
+}

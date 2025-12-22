@@ -417,18 +417,7 @@ Account settings and personalization.
     "level": 1,
     "species": "Species",
     "background": "Background",
-    "alignment": "Neutral Good",
-    "name": "Character Name",
-    "class": "Class",
-    "subclass": "Subclass",
-    "level": 1,
-    "species": "Species",
-    "background": "Background",
-    "alignment": "Neutral Good",
-    "xp": 0,
-    "archetype": "Oathbreaker Tank",
-    "tags": ["edgy", "tank", "support"],
-    "description": "A bard silenced by war, now finding music in the clash of steel."
+    "alignment": "Neutral Good"
   },
   "vitals": {
     "armor_class": 10,

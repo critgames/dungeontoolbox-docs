@@ -1,0 +1,164 @@
+{
+    "name": "Valeros",
+    "species": "Human",
+    "background": "Soldier",
+    "totalLevel": 1,
+    "alignment": "Neutral Good",
+    "xp": 0,
+    "archetype": "Champion",
+    "description": "A brave fighter with a trusty longsword and a scar across his cheek.",
+    "tags": [
+        "melee",
+        "tank",
+        "soldier"
+    ],
+    "classes": [
+        {
+            "name": "Fighter",
+            "level": 1,
+            "isPrimary": true
+        }
+    ],
+    "vitals": {
+        "armor_class": 16,
+        "initiative": 1,
+        "speed": 30,
+        "hp_max": 12,
+        "hp_current": 12,
+        "hp_temp": 0,
+        "hit_dice_total": "1d10",
+        "hit_dice_current": 1,
+        "proficiency_bonus": 2,
+        "passive_perception": 11,
+        "heroic_inspiration": false,
+        "conditions": [],
+        "exhaustion_level": 0
+    },
+    "abilities": {
+        "str": {
+            "score": 16,
+            "modifier": 3
+        },
+        "dex": {
+            "score": 13,
+            "modifier": 1
+        },
+        "con": {
+            "score": 15,
+            "modifier": 2
+        },
+        "int": {
+            "score": 10,
+            "modifier": 0
+        },
+        "wis": {
+            "score": 12,
+            "modifier": 1
+        },
+        "cha": {
+            "score": 10,
+            "modifier": 0
+        }
+    },
+    "saves": {
+        "str_save": true,
+        "dex_save": false,
+        "con_save": true,
+        "int_save": false,
+        "wis_save": false,
+        "cha_save": false
+    },
+    "skills": {
+        "athletics": 5,
+        "intimidation": 2,
+        "perception": 3,
+        "survival": 3,
+        "acrobatics": 1,
+        "animal_handling": 1,
+        "arcana": 0,
+        "deception": 0,
+        "history": 0,
+        "insight": 1,
+        "investigation": 0,
+        "medicine": 1,
+        "nature": 0,
+        "performance": 0,
+        "persuasion": 0,
+        "religion": 0,
+        "sleight_of_hand": 1,
+        "stealth": 1
+    },
+    "features": [
+        {
+            "name": "Fighting Style: Dueling",
+            "source": "Fighter 1",
+            "type": "passive",
+            "description": "When you are wielding a melee weapon in one hand and no other weapons, you gain a +2 bonus to damage rolls with that weapon."
+        },
+        {
+            "name": "Second Wind",
+            "source": "Fighter 1",
+            "type": "action",
+            "uses": {
+                "max": 1,
+                "current": 1,
+                "reset": "short"
+            },
+            "description": "You have a limited well of stamina that you can draw on to protect yourself from harm. On your turn, you can use a bonus action to regain hit points equal to 1d10 + your fighter level."
+        }
+    ],
+    "inventory": {
+        "currency": {
+            "gp": 15,
+            "sp": 0,
+            "cp": 0
+        },
+        "items": [
+            {
+                "name": "Longsword",
+                "quantity": 1,
+                "equipped": true,
+                "type": "weapon",
+                "meta": {
+                    "damage": "1d8",
+                    "damage_type": "slashing",
+                    "properties": [
+                        "Versatile (1d10)"
+                    ]
+                }
+            },
+            {
+                "name": "Chain Mail",
+                "quantity": 1,
+                "equipped": true,
+                "type": "armor",
+                "meta": {
+                    "ac": 16,
+                    "category": "Heavy"
+                }
+            },
+            {
+                "name": "Shield",
+                "quantity": 1,
+                "equipped": true,
+                "type": "armor",
+                "meta": {
+                    "ac": 2,
+                    "category": "Shield"
+                }
+            },
+            {
+                "name": "Backpack",
+                "quantity": 1
+            },
+            {
+                "name": "Bedroll",
+                "quantity": 1
+            },
+            {
+                "name": "Rations (1 day)",
+                "quantity": 10
+            }
+        ]
+    }
+}

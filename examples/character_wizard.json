@@ -1,0 +1,240 @@
+{
+    "name": "Ezren",
+    "species": "Elf (High)",
+    "background": "Sage",
+    "totalLevel": 2,
+    "alignment": "Lawful Neutral",
+    "xp": 300,
+    "archetype": "Evoker",
+    "description": "An aging wizard seeking lost knowledge, clad in blue robes.",
+    "tags": [
+        "caster",
+        "ranged",
+        "utility",
+        "aoe"
+    ],
+    "classes": [
+        {
+            "name": "Wizard",
+            "level": 2,
+            "isPrimary": true
+        }
+    ],
+    "vitals": {
+        "armor_class": 12,
+        "initiative": 2,
+        "speed": 30,
+        "hp_max": 14,
+        "hp_current": 10,
+        "hp_temp": 0,
+        "hit_dice_total": "2d6",
+        "hit_dice_current": 1,
+        "proficiency_bonus": 2,
+        "passive_perception": 13,
+        "heroic_inspiration": false,
+        "conditions": [],
+        "exhaustion_level": 0
+    },
+    "abilities": {
+        "str": {
+            "score": 8,
+            "modifier": -1
+        },
+        "dex": {
+            "score": 14,
+            "modifier": 2
+        },
+        "con": {
+            "score": 12,
+            "modifier": 1
+        },
+        "int": {
+            "score": 17,
+            "modifier": 3
+        },
+        "wis": {
+            "score": 13,
+            "modifier": 1
+        },
+        "cha": {
+            "score": 10,
+            "modifier": 0
+        }
+    },
+    "saves": {
+        "str_save": false,
+        "dex_save": false,
+        "con_save": false,
+        "int_save": true,
+        "wis_save": true,
+        "cha_save": false
+    },
+    "skills": {
+        "arcana": 5,
+        "history": 5,
+        "investigation": 5,
+        "insight": 3,
+        "perception": 3,
+        "acrobatics": 2,
+        "animal_handling": 1,
+        "athletics": -1,
+        "deception": 0,
+        "intimidation": 0,
+        "medicine": 1,
+        "nature": 3,
+        "performance": 0,
+        "persuasion": 0,
+        "religion": 3,
+        "sleight_of_hand": 2,
+        "stealth": 2,
+        "survival": 1
+    },
+    "features": [
+        {
+            "name": "Arcane Recovery",
+            "source": "Wizard 1",
+            "type": "action",
+            "uses": {
+                "max": 1,
+                "current": 1,
+                "reset": "long"
+            },
+            "description": "Once per day when you finish a short rest, you can choose expended spell slots to recover. The spell slots can have a combined level that is equal to or less than half your wizard level (rounded up)."
+        },
+        {
+            "name": "Sculpt Spells",
+            "source": "Evocation School",
+            "type": "passive",
+            "description": "When you cast an evocation spell that affects other creatures that you can see, you can choose a number of them equal to 1 + the spell's level. The chosen creatures automatically succeed on their saving throws against the spell, and they take no damage if they would normally take half damage on a successful save."
+        }
+    ],
+    "spellcasting": {
+        "ability": "int",
+        "save_dc": 13,
+        "attack_bonus": 5,
+        "slots": {
+            "1": {
+                "total": 3,
+                "used": 1
+            }
+        },
+        "known": [
+            {
+                "name": "Fire Bolt",
+                "level": 0,
+                "school": "Evocation",
+                "casting_time": "1 Action",
+                "range": "120 ft",
+                "components": [
+                    "V",
+                    "S"
+                ],
+                "is_attack": true,
+                "damage": "1d10",
+                "damage_type": "fire"
+            },
+            {
+                "name": "Mage Hand",
+                "level": 0,
+                "school": "Conjuration",
+                "casting_time": "1 Action",
+                "range": "30 ft",
+                "components": [
+                    "V",
+                    "S"
+                ]
+            },
+            {
+                "name": "Prestidigitation",
+                "level": 0,
+                "school": "Transmutation",
+                "casting_time": "1 Action",
+                "range": "10 ft",
+                "components": [
+                    "V",
+                    "S"
+                ]
+            },
+            {
+                "name": "Magic Missile",
+                "level": 1,
+                "school": "Evocation",
+                "casting_time": "1 Action",
+                "range": "120 ft",
+                "components": [
+                    "V",
+                    "S"
+                ],
+                "prepared": true,
+                "damage": "1d4+1",
+                "damage_type": "force"
+            },
+            {
+                "name": "Shield",
+                "level": 1,
+                "school": "Abjuration",
+                "casting_time": "1 Reaction",
+                "range": "Self",
+                "components": [
+                    "V",
+                    "S"
+                ],
+                "prepared": true,
+                "description": "+5 AC until start of next turn"
+            },
+            {
+                "name": "Burning Hands",
+                "level": 1,
+                "school": "Evocation",
+                "casting_time": "1 Action",
+                "range": "Self (15-ft cone)",
+                "components": [
+                    "V",
+                    "S"
+                ],
+                "prepared": true,
+                "damage": "3d6",
+                "damage_type": "fire"
+            }
+        ]
+    },
+    "inventory": {
+        "currency": {
+            "gp": 25,
+            "sp": 0,
+            "cp": 50
+        },
+        "items": [
+            {
+                "name": "Quarterstaff",
+                "quantity": 1,
+                "equipped": true,
+                "type": "weapon",
+                "meta": {
+                    "damage": "1d6",
+                    "damage_type": "bludgeoning",
+                    "properties": [
+                        "Versatile (1d8)"
+                    ]
+                }
+            },
+            {
+                "name": "Spellbook",
+                "quantity": 1,
+                "type": "tool"
+            },
+            {
+                "name": "Component Pouch",
+                "quantity": 1,
+                "type": "tool"
+            },
+            {
+                "name": "Scholar's Pack",
+                "quantity": 1
+            }
+        ]
+    },
+    "appearance": "Ezren is an older human male with long white hair and a neatly trimmed beard. He wears sturdy travel clothes under his robes.",
+    "backstory": "Ezren turned to wizardry late in life to clear his father's name. He travels to gain the power and knowledge needed to uncover the truth of a long-forgotten heresy.",
+    "personality": "I am driven by a thirst for knowledge that others find dangerous. I have little patience for those who rush into danger without a plan."
+}

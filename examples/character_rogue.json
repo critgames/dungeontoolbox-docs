@@ -1,0 +1,180 @@
+{
+    "name": "Merisiel",
+    "species": "Halfling",
+    "background": "Criminal",
+    "totalLevel": 3,
+    "alignment": "Chaotic Neutral",
+    "xp": 900,
+    "archetype": "Thief",
+    "description": "A nimble rogue with a penchant for shiny things.",
+    "tags": [
+        "stealth",
+        "dps",
+        "utility"
+    ],
+    "classes": [
+        {
+            "name": "Rogue",
+            "level": 3,
+            "isPrimary": true
+        }
+    ],
+    "vitals": {
+        "armor_class": 15,
+        "initiative": 4,
+        "speed": 25,
+        "hp_max": 24,
+        "hp_current": 24,
+        "hp_temp": 0,
+        "hit_dice_total": "3d8",
+        "hit_dice_current": 3,
+        "proficiency_bonus": 2,
+        "passive_perception": 12,
+        "heroic_inspiration": true,
+        "conditions": [],
+        "exhaustion_level": 0
+    },
+    "abilities": {
+        "str": {
+            "score": 10,
+            "modifier": 0
+        },
+        "dex": {
+            "score": 18,
+            "modifier": 4
+        },
+        "con": {
+            "score": 14,
+            "modifier": 2
+        },
+        "int": {
+            "score": 12,
+            "modifier": 1
+        },
+        "wis": {
+            "score": 10,
+            "modifier": 0
+        },
+        "cha": {
+            "score": 14,
+            "modifier": 2
+        }
+    },
+    "saves": {
+        "str_save": false,
+        "dex_save": true,
+        "con_save": false,
+        "int_save": true,
+        "wis_save": false,
+        "cha_save": false
+    },
+    "skills": {
+        "acrobatics": 6,
+        "stealth": 8,
+        "sleight_of_hand": 6,
+        "deception": 4,
+        "perception": 2,
+        "investigation": 3,
+        "athletics": 0,
+        "animal_handling": 0,
+        "arcana": 1,
+        "history": 1,
+        "insight": 0,
+        "intimidation": 2,
+        "medicine": 0,
+        "nature": 1,
+        "performance": 2,
+        "persuasion": 2,
+        "religion": 1,
+        "survival": 0
+    },
+    "features": [
+        {
+            "name": "Sneak Attack",
+            "source": "Rogue 1",
+            "type": "passive",
+            "description": "Once per turn, you can deal an extra 2d6 damage to one creature you hit with an attack if you have advantage on the attack roll."
+        },
+        {
+            "name": "Cunning Action",
+            "source": "Rogue 2",
+            "type": "passive",
+            "description": "You can take a bonus action on each of your turns in combat to take the Dash, Disengage, or Hide action."
+        },
+        {
+            "name": "Fast Hands",
+            "source": "Thief 3",
+            "type": "passive",
+            "description": "You can use the Bonus Action granted by your Cunning Action to make a Dexterity (Sleight of Hand) check, use your thieves' tools to disarm a trap or open a lock, or take the Use an Object action."
+        }
+    ],
+    "custom_actions": [
+        {
+            "name": "Dagger Throw",
+            "action_type": "action",
+            "damage": "1d4 + @mod:dex",
+            "damage_type": "piercing",
+            "range": "20/60"
+        }
+    ],
+    "inventory": {
+        "currency": {
+            "gp": 50,
+            "sp": 10,
+            "cp": 0
+        },
+        "items": [
+            {
+                "name": "Shortsword",
+                "quantity": 1,
+                "equipped": true,
+                "type": "weapon",
+                "meta": {
+                    "damage": "1d6",
+                    "damage_type": "piercing",
+                    "properties": [
+                        "Finesse",
+                        "Light"
+                    ]
+                }
+            },
+            {
+                "name": "Dagger",
+                "quantity": 2,
+                "equipped": true,
+                "type": "weapon",
+                "meta": {
+                    "damage": "1d4",
+                    "damage_type": "piercing",
+                    "properties": [
+                        "Finesse",
+                        "Light",
+                        "Thrown (20/60)"
+                    ]
+                }
+            },
+            {
+                "name": "Leather Armor",
+                "quantity": 1,
+                "equipped": true,
+                "type": "armor",
+                "meta": {
+                    "ac": 11,
+                    "category": "Light"
+                }
+            },
+            {
+                "name": "Thieves' Tools",
+                "quantity": 1,
+                "type": "tool"
+            },
+            {
+                "name": "Grappling Hook",
+                "quantity": 1
+            }
+        ]
+    },
+    "appearance": "Small and wiry, Merisiel wears dark leathers and keeps her silver hair tied back. Her eyes are constantly scanning the room.",
+    "backstory": "Raised on the streets of a bustling metropolis, Merisiel learned early that ownership is a fluid concept. She joined a local guild but left after a heist went wrong.",
+    "personality": "I always have a plan B, and usually a plan C. I don't trust authority, but I'm loyal to my friends."
+}
