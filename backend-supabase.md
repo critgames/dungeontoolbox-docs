@@ -406,4 +406,32 @@ CREATE INDEX idx_note_embeddings_note_id ON public.character_note_embeddings(not
 -- For pgvector + ivfflat:
 -- CREATE INDEX idx_embeddings_vector_ivfflat ON public.character_note_embeddings USING ivfflat (embedding vector_l2_ops) WITH (lists = 100);
 
+
+--- SETUP SUBSCRIPTONS
+ALTER TABLE public.credits RENAME TO user_subscriptions;
+ALTER TABLE public.user_subscriptions RENAME COLUMN balance TO credits;
+
+ALTER TABLE public.user_subscriptions
+ADD COLUMN stripe_customer_id text UNIQUE,
+ADD COLUMN stripe_subscription_id text,
+ADD COLUMN subscription_status text DEFAULT 'active',
+ADD COLUMN tier text DEFAULT 'free',
+ADD COLUMN current_period_end timestamptz,
+ADD COLUMN updated_at timestamptz DEFAULT timezone('utc', now()),
+ADD COLUMN metadata jsonb DEFAULT '{}'::jsonb;
+
+ALTER TABLE public.user_subscriptions
+ALTER COLUMN credits SET DEFAULT 50;
+
+-- Optional: add indexes for faster lookups
+CREATE INDEX IF NOT EXISTS idx_user_subscription_stripe_subscription_id ON public.user_subscriptions (stripe_subscription_id);
+CREATE INDEX IF NOT EXISTS idx_user_subscription_tier ON public.user_subscriptions (tier);
+
+-- Add a CHECK constraint for subscription_status
+ALTER TABLE public.user_subscriptions
+ADD CONSTRAINT user_subscription_status_check CHECK (subscription_status IN ('active','past_due','canceled','unpaid','trialing'));
+
+--  Trigger Updated At
+CREATE TRIGGER set_updated_at_on_user_subscriptions BEFORE UPDATE ON public.user_subscriptions FOR EACH ROW EXECUTE FUNCTION public.set_updated_at();
+
 ```
