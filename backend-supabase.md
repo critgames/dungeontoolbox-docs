@@ -319,4 +319,91 @@ CREATE INDEX idx_characters_archetype ON public.characters(archetype);
 ALTER TABLE credits
 ADD COLUMN "lifetime_usage" INTEGER DEFAULT 0;
 
+
+-- Character Notes
+BEGIN;
+
+-- Table
+CREATE TABLE public.character_notes (
+  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  character_id uuid NOT NULL REFERENCES public.characters(id) ON DELETE CASCADE,
+  user_id uuid NOT NULL REFERENCES auth.users(id),
+  note text NOT NULL,
+  created_at timestamptz NOT NULL DEFAULT now(),
+  updated_at timestamptz NOT NULL DEFAULT now()
+);
+
+-- Indexes
+CREATE INDEX character_notes_character_created_idx ON public.character_notes (character_id, created_at DESC);
+CREATE INDEX character_notes_user_idx ON public.character_notes (user_id);
+
+-- Enable RLS
+ALTER TABLE public.character_notes ENABLE ROW LEVEL SECURITY;
+
+-- Policies
+CREATE POLICY "notes_select_owner" ON public.character_notes
+  FOR SELECT
+  TO authenticated
+  USING ( user_id = (SELECT auth.uid()) );
+
+CREATE POLICY "notes_insert_owner" ON public.character_notes
+  FOR INSERT
+  TO authenticated
+  WITH CHECK ( user_id = (SELECT auth.uid()) );
+
+CREATE POLICY "notes_update_owner" ON public.character_notes
+  FOR UPDATE
+  TO authenticated
+  USING ( user_id = (SELECT auth.uid()) )
+  WITH CHECK ( user_id = (SELECT auth.uid()) );
+
+CREATE POLICY "notes_delete_owner" ON public.character_notes
+  FOR DELETE
+  TO authenticated
+  USING ( user_id = (SELECT auth.uid()) );
+
+-- Trigger function to auto-update updated_at
+CREATE OR REPLACE FUNCTION public.set_updated_at()
+RETURNS TRIGGER LANGUAGE plpgsql AS $$
+BEGIN
+  NEW.updated_at = now();
+  RETURN NEW;
+END;
+$$;
+
+CREATE TRIGGER tr_character_notes_updated_at
+BEFORE UPDATE ON public.character_notes
+FOR EACH ROW EXECUTE FUNCTION public.set_updated_at();
+
+COMMIT;
+
+-- Charcter Notes Added Title Column
+ALTER TABLE public.character_notes
+ADD COLUMN title text;
+
+-- Optional: index to assist queries that filter by character and order by newest notes.
+-- (Keeps index small by not indexing the full note text; title is included but may be large.)
+CREATE INDEX IF NOT EXISTS character_notes_character_created_title_idx
+  ON public.character_notes (character_id, created_at DESC, title);
+
+-- If you want the title to be required for every note, use this instead:
+-- ALTER TABLE public.character_notes ALTER COLUMN title SET NOT NULL;
+
+-- Character Notes Embeddings
+CREATE TABLE public.character_note_embeddings (
+  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  note_id uuid NOT NULL REFERENCES public.character_notes(id) ON DELETE CASCADE,
+  model text NOT NULL,
+  embedding vector(768) NOT NULL,
+  content text NOT NULL,
+  chunk_index integer DEFAULT 0,
+  metadata jsonb DEFAULT '{}'::jsonb,
+  created_at timestamptz NOT NULL DEFAULT now()
+);
+
+CREATE INDEX idx_note_embeddings_note_id ON public.character_note_embeddings(note_id);
+-- Example vector index (pgvector / supabase vector). Adjust operator class and method depending on extension:
+-- For pgvector + ivfflat:
+-- CREATE INDEX idx_embeddings_vector_ivfflat ON public.character_note_embeddings USING ivfflat (embedding vector_l2_ops) WITH (lists = 100);
+
 ```
