@@ -533,3 +533,39 @@ Sent when HP, Slots, or other dynamic stats change via the API.
   }
 }
 ```
+
+---
+
+## 7. Billing & Subscriptions
+
+### Checkout Session
+Initaties a Stripe Checkout session for subscription upgrades.
+
+* **POST** `/billing/checkout`
+* **Headers**: `Authorization: Bearer <token>`
+* **Body**: `{ "priceId": "price_..." }`
+* **Response**: `200 OK`
+```json
+{ "url": "https://checkout.stripe.com/c/pay/..." }
+```
+
+### Customer Portal
+Generates a link to the Stripe Customer Portal for managing subscriptions (cancel/downgrade).
+
+* **POST** `/billing/portal`
+* **Headers**: `Authorization: Bearer <token>`
+* **Response**: `200 OK`
+```json
+{ "url": "https://billing.stripe.com/p/session/..." }
+```
+
+### Webhook
+Stripe Webhook endpoint for server-to-server events. Verified via `Stripe-Signature`.
+
+* **POST** `/billing/webhook`
+* **Authentication**: Signature Verification (No Bearer Token)
+* **Events Handled**:
+    * `customer.subscription.created`: Provisions tier upgrade.
+    * `customer.subscription.updated`: Handles upgrades and cancellation-at-period-end.
+    * `customer.subscription.deleted`: Downgrades to Free tier.
+    * `invoice.payment_succeeded`: Resets monthly credits.
