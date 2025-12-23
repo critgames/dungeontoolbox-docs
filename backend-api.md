@@ -273,6 +273,47 @@ Permanently deletes a character.
 
 ---
 
+### Smart Journal (Notes)
+**Tier Requirement:** Read-Only for Free, Full Access for Player/GM.
+
+#### List Notes
+* **GET** `/characters/:id/notes`
+* **Query Params:**
+    * `category`: (Optional) "Log", "NPC", "Quest", etc.
+    * `search`: (Optional) Text search via RPC.
+    * `limit`, `offset`: Pagination.
+* **Response:**
+```json
+[
+  { 
+    "id": "...", "title": "Session 1", "note": "Met the king.", 
+    "category": "Log", "status": "Pinned", "tags": ["king"]
+  }
+]
+```
+
+#### Create Note
+* **POST** `/characters/:id/notes`
+* **Body:**
+```json
+{
+  "title": "New Quest",
+  "note": "Kill the rats.",
+  "category": "Quest",
+  "status": "None",
+  "tags": ["rats"]
+}
+```
+
+#### Update Note
+* **PATCH** `/notes/:id`
+* **Body:** any of the create fields.
+
+#### Delete Note
+* **DELETE** `/notes/:id`
+
+---
+
 ## 3. Gameplay & Realtime (The "Logic Layer")
 
 ### Roll Dice

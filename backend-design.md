@@ -45,6 +45,14 @@ The API must verify the `Authorization: Bearer <token>` header on every protecte
     5.  Deduct 1 Credit.
     6.  **Do NOT save to DB yet.** Return JSON to client for preview.
 
+    6.  **Do NOT save to DB yet.** Return JSON to client for preview.
+
+#### **Smart Journal (Notes)**
+* **Schema Upgrade:** `character_notes` table now includes `category`, `status`, and `tags`.
+* **Search:** Utilizes `rpc_search_character_notes_by_character` (Postgres Full Text Search / pgvector).
+* **RAG:** Notes are automatically embedded (`text-embedding-004`) on Create/Update to support AI Context Memory.
+* **Access Control:** Enforces Tier limits (Free = Read-Only).
+
 #### **POST** `/companion/chat`
 * **Input:** `{ message: "Can I grapple a ghost?", characterId: "uuid" }`
 * **Logic:**

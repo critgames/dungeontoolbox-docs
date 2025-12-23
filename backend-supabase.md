@@ -434,4 +434,185 @@ ADD CONSTRAINT user_subscription_status_check CHECK (subscription_status IN ('ac
 --  Trigger Updated At
 CREATE TRIGGER set_updated_at_on_user_subscriptions BEFORE UPDATE ON public.user_subscriptions FOR EACH ROW EXECUTE FUNCTION public.set_updated_at();
 
+-- Adding Notes Cateogories and Status
+-- 1) Create ENUM type for category
+CREATE TYPE public.character_note_category AS ENUM (
+  'NPC',
+  'Quest',
+  'Location',
+  'Item',
+  'Lore',
+  'Log',
+  'Other'
+);
+
+-- 2) Create ENUM type for status
+CREATE TYPE public.character_note_status AS ENUM (
+  'pinned',
+  'archived'
+);
+
+-- 3) Add category column (non-null, default 'Log')
+ALTER TABLE public.character_notes
+ADD COLUMN category public.character_note_category NOT NULL DEFAULT 'Log';
+
+-- 4) Add status column (nullable)
+ALTER TABLE public.character_notes
+ADD COLUMN status public.character_note_status;
+
+-- 5) Optional: add indexes to speed queries filtering by these columns
+CREATE INDEX IF NOT EXISTS idx_character_notes_category ON public.character_notes (category);
+CREATE INDEX IF NOT EXISTS idx_character_notes_status ON public.character_notes (status);
+
+-- Make NOTES searchable
+-- 1) Install/uninstall not needed: pg_trgm and unaccent are already available.
+CREATE EXTENSION IF NOT EXISTS unaccent WITH SCHEMA public;
+
+-- 2) Add tsvector column for full-text search
+ALTER TABLE public.character_notes
+ADD COLUMN note_search tsvector GENERATED ALWAYS AS (
+  to_tsvector('simple', coalesce(unaccent(note), ''))
+) STORED;
+
+-- 3) Create GIN index on the tsvector column for FTS queries
+CREATE INDEX IF NOT EXISTS idx_character_notes_note_search ON public.character_notes USING GIN (note_search);
+
+-- 4) Optional: create a pg_trgm GIN index to accelerate ILIKE / %search% and similarity searches
+CREATE INDEX IF NOT EXISTS idx_character_notes_note_trgm ON public.character_notes USING GIN (note gin_trgm_ops);
+
+-- 5) Optional: create a functional index for lower(unaccent(note)) to speed case-insensitive searches
+CREATE INDEX IF NOT EXISTS idx_character_notes_note_unaccent_lower ON public.character_notes USING GIN (lower(unaccent(note)) gin_trgm_ops);
+
+-- SETUP Search Vectors:
+ALTER TABLE public.character_notes ADD COLUMN IF NOT EXISTS search_vector tsvector;
+
+-- Populate initially
+UPDATE public.character_notes SET search_vector =
+  to_tsvector('simple', coalesce(title,'') || ' ' || coalesce(note,''));
+
+-- Create index
+CREATE INDEX IF NOT EXISTS idx_character_notes_search_vector ON public.character_notes USING GIN(search_vector);
+
+-- Trigger function to update
+CREATE OR REPLACE FUNCTION public.character_notes_search_vector_update() RETURNS trigger LANGUAGE plpgsql AS $$
+BEGIN
+  NEW.search_vector := to_tsvector('simple', coalesce(NEW.title,'') || ' ' || coalesce(NEW.note,''));
+  RETURN NEW;
+END;
+$$;
+
+CREATE TRIGGER trg_character_notes_search_vector
+BEFORE INSERT OR UPDATE ON public.character_notes
+FOR EACH ROW EXECUTE FUNCTION public.character_notes_search_vector_update();
+
+-- Enable Better Text Searchign with Stemming and Stop-Words
+-- Corrected: update search_vector using english + unaccent with weights
+UPDATE public.character_notes SET search_vector =
+  setweight(to_tsvector('english', unaccent(coalesce(title,''))), 'A') ||
+  setweight(to_tsvector('english', unaccent(coalesce(note,''))), 'B');
+
+-- Drop and recreate a standard GIN index on the tsvector
+DROP INDEX IF EXISTS idx_character_notes_search_vector;
+CREATE INDEX idx_character_notes_search_vector ON public.character_notes USING GIN(search_vector);
+
+-- Create updated trigger function
+CREATE OR REPLACE FUNCTION public.character_notes_search_vector_update() RETURNS trigger LANGUAGE plpgsql AS $$
+BEGIN
+  NEW.search_vector :=
+    setweight(to_tsvector('english', unaccent(coalesce(NEW.title,''))), 'A') ||
+    setweight(to_tsvector('english', unaccent(coalesce(NEW.note,''))), 'B');
+  RETURN NEW;
+END;
+$$;
+
+-- Recreate trigger
+DROP TRIGGER IF EXISTS trg_character_notes_search_vector ON public.character_notes;
+CREATE TRIGGER trg_character_notes_search_vector
+BEFORE INSERT OR UPDATE ON public.character_notes
+FOR EACH ROW EXECUTE FUNCTION public.character_notes_search_vector_update();
+
+-- Added RPC function so that searching text is easier
+CREATE OR REPLACE FUNCTION public.rpc_search_character_notes_by_character(
+  p_query text,
+  p_character_id uuid,
+  p_limit int DEFAULT 20,
+  p_offset int DEFAULT 0
+)
+RETURNS TABLE (
+  total_count bigint,
+  results jsonb
+)
+LANGUAGE plpgsql STABLE AS
+$$
+DECLARE
+  q tsquery;
+  rec RECORD;
+  rows jsonb := '[]'::jsonb;
+  cnt bigint;
+  caller uuid := (select auth.uid());
+  owner uuid;
+BEGIN
+  IF p_query IS NULL OR btrim(p_query) = '' THEN
+    total_count := 0;
+    results := rows;
+    RETURN;
+  END IF;
+  IF p_character_id IS NULL THEN
+    RAISE EXCEPTION 'p_character_id is required';
+  END IF;
+
+  -- Verify character exists and is owned by caller
+  SELECT owner_id INTO owner
+  FROM public.characters
+  WHERE id = p_character_id;
+
+  IF owner IS NULL THEN
+    RAISE EXCEPTION 'character_id not found';
+  END IF;
+
+  IF caller IS NULL OR caller <> owner THEN
+    RAISE EXCEPTION 'permission denied';
+  END IF;
+
+  q := plainto_tsquery('english', unaccent(p_query));
+
+  SELECT count(*) INTO cnt
+  FROM public.character_notes cn
+  WHERE cn.character_id = p_character_id
+    AND cn.search_vector @@ q;
+
+  total_count := cnt;
+
+  FOR rec IN
+    SELECT
+      cn.id,
+      ts_rank_cd(cn.search_vector, q) AS rank,
+      cn.title,
+      cn.note,
+      ts_headline('english', cn.note, q,
+        'StartSel=<mark>,StopSel=</mark>,MaxFragments=2,ShortWord=3,FragmentDelimiter=...') AS snippet,
+      cn.created_at
+    FROM public.character_notes cn
+    WHERE cn.character_id = p_character_id
+      AND cn.search_vector @@ q
+    ORDER BY rank DESC, cn.created_at DESC
+    LIMIT p_limit OFFSET p_offset
+  LOOP
+    rows := rows || jsonb_build_array(
+      jsonb_build_object(
+        'id', rec.id,
+        'rank', rec.rank,
+        'title', rec.title,
+        'note', rec.note,
+        'snippet', rec.snippet,
+        'created_at', rec.created_at
+      )
+    );
+  END LOOP;
+
+  results := rows;
+  RETURN;
+END;
+$$;
+
 ```

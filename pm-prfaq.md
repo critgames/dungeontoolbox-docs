@@ -50,7 +50,7 @@ Crit Games is dedicated to modernizing the tabletop experience, building digital
 | **P1** | Print to PDF | System must generate a printable, formatted character sheet PDF. | Player/GM |
 | **P1** | Context-Aware Click-to-Roll | Users can touch/click character sheet stats (Initiative, Skills, Saves) to instantly trigger a roll with correct modifiers. | Free ($0/mo) |
 | **P2** | Priority Access | Users must receive early access to new features. | Player/GM |
-| **P2** | Adventure Log | System must provide a free-text journal section for users to record session notes and campaign details. | Free ($0/mo) |
+| **P1** | Smart Journal | System must provide a structured "Smart Journal" with Categories, Pinning, and RAG-search integration. | Player/GM |
 | **P2** | Quest Tracker | System must provide a structured list to track active, completed, and failed quests. | Free ($0/mo) |
 | **P2** | Auto-Generate Character | System must provide a "Rapid Build" option to generate a full character based on minimal inputs (Tone/Class/Level). | Free ($0/mo) |
 
@@ -68,6 +68,7 @@ Crit Games is dedicated to modernizing the tabletop experience, building digital
 | **The Companion (AI)** | **50 Lifetime** (Trial) | **500 / Month** (High) | **5,000 / Month** (Power) |
 | **Creation Mode** | Limited | **Full** | **Full** |
 | **Context Memory** | No | **Yes** | **Yes** |
+| **Smart Journal** | Read-Only | **Full Access** | **Full Access** |
 | **Export** | Digital Only | **Print to PDF** | **Print to PDF** |
 
 ---
@@ -87,6 +88,22 @@ Crit Games is dedicated to modernizing the tabletop experience, building digital
 *   **Dynamic State Updates:** Type "I take 15 slashing damage" and **The Companion** automatically adjusts HP and concentration checks.
 *   **The Companion (Memory):** The AI indexes your adventure notes (Journal/Session Logs) to answer context-heavy questions ("Who is the Mayor?").
 
+### Notes System ("Smart Notes")
+*   **Structured Entry:** Users can create notes across specific categories:
+    *   **Log (Default):** Chronological session notes.
+    *   **NPC:** details on characters met.
+    *   **Quest:** Objectives and milestones.
+    *   **Location:** Towns, dungeons, and shops.
+    *   **Item:** Loot and magical artifacts.
+    *   **Lore:** History and world details.
+    *   **Other:** Miscellaneous.
+*   **Status Management:**
+    *   **Pinned:** Keeps critical notes at the top of the list.
+    *   **None (Standard):** Standard chronological sort.
+    *   **Archived:** Moves note to the bottom/hidden view.
+*   **Search & Retrieval:** Full-text search (Title + Body) and Category filters.
+*   **RAG Integration (Paid Only):** All active (non-archived) notes are indexed by the Vector Database. When you ask The Companion "Who gave us this key?", it searches your *Item* and *Log* notes for context.
+
 ### Character View (Tabbed Interface)
 Once a character is selected from the Dashboard, the user enters the main "Active Play" interface, organized into five intuitive tabs for focused gameplay.
 
@@ -102,9 +119,9 @@ Once a character is selected from the Dashboard, the user enters the main "Activ
 *   **4. Character Details:**
     *   Designed for deep roleplay context.
     *   **Displays:** All Proficiencies (Languages, Tools, Armor, Weapons), Appearance, Backstory, Personality Traits, Ideals, Bonds, and Flaws.
-*   **5. Journal & Notes:**
-    *   Designed for campaign tracking.
-    *   **Displays:** Free-form Session Notes and a structured Quest Log.
+*   **5. Smart Journal:**
+    *   Designed for campaign tracking and memory.
+    *   **Displays:** Filterable list of Notes (NPCs, Quests, Logs) with Search and Pinning. Indexable by AI.
 
 ### Tools & Utilities
 *   **Universal Dice Roller:** A global 3D roller that accepts complex formulas (e.g., `4d6kh3 + 2`) via a command bar. Supports standard RPG notation (infix), exploding dice (`!`), and keep/drop mechanics.
@@ -180,7 +197,7 @@ Account settings and personalization.
 **A:** Yes. You can export your character as a PDF or JSON to send to your GM.
 
 **Q: What happens if I downgrade from Gamemaster to Free?**
-**A:** Your characters are safe, but you will be locked to the "First 6" created. You can choose which ones to keep active. Your AI interactions will revert to the 50 Lifetime limit (if not already used).
+**A:** You will retain your full Gamemaster benefits (Unlimited Storage, 5,000 AI Credits) until the end of your current billing cycle. Afterward, your account will revert to the Free Tier rules: you will be locked to your first 6 active characters, and your AI interactions will revert to the 50 Lifetime limit (if not already used).
 
 **Q: Does this support the 2014 rules?**
 **A:** Our system is built native for D&D 2024 (5.5e). While you can manually enter 2014 content, The Companion's rules knowledge is strictly 2024.
@@ -574,7 +591,27 @@ Account settings and personalization.
   
   "appearance": "",
   "backstory": "",
-  "personality": ""
+  "personality": "",
+  "notes": [
+    {
+      "id": "uuid-1234",
+      "title": "Meeting the Baron",
+      "content": "The Baron offered us 500gp to clear the rats.",
+      "category": "Log",
+      "tags": ["Baron", "Quest", "Rats"],
+      "status": "Pinned", 
+      "timestamp": "2024-01-01T12:00:00Z"
+    },
+    {
+      "id": "uuid-5678",
+      "title": "Strange Key",
+      "content": "Found on the goblin chief. Has a skull emblem.",
+      "category": "Item",
+      "tags": ["Key", "Goblin"],
+      "status": "None",
+      "timestamp": "2024-01-02T14:30:00Z"
+    }
+  ]
 }
 ```
 
