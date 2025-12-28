@@ -9,6 +9,7 @@
     "api_version": "v1"
   },
   "name": "Ezren",
+  "portrait_url": "https://media.dugneontoolbox.com/assets/characters/default.png",
   "level": 20,
   "xp": 355000,
   "species": "Elf",

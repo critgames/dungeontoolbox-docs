@@ -615,4 +615,81 @@ BEGIN
 END;
 $$;
 
+-- CHANGED CHARACTER_NOTES CATEGORY TO TAG
+-- 1) add tags column
+ALTER TABLE public.character_notes
+ADD COLUMN IF NOT EXISTS tags text[] DEFAULT '{}'::text[];
+
+-- 2) migrate category -> tags for existing rows
+UPDATE public.character_notes
+SET tags = ARRAY[category::text]
+WHERE (tags IS NULL OR tags = '{}') AND category IS NOT NULL;
+
+--Update search_vector trigger to include tags
+CREATE OR REPLACE FUNCTION public.character_notes_search_vector_update()
+RETURNS trigger LANGUAGE plpgsql AS $$
+BEGIN
+  NEW.search_vector :=
+    setweight(to_tsvector('english', coalesce(unaccent(NEW.title), '')), 'A') ||
+    setweight(to_tsvector('english', coalesce(unaccent(NEW.note), '')), 'B') ||
+    setweight(to_tsvector('english', coalesce(unaccent(array_to_string(NEW.tags, ' ')), '')), 'C');
+  RETURN NEW;
+END;
+$$;
+
+--Update the RPC function (in rpc_search_character_notes_by_character)
+...
+FOR rec IN
+  SELECT
+    cn.id,
+    ts_rank_cd(cn.search_vector, q) AS rank,
+    cn.title,
+    cn.note,
+    cn.tags,
+    ts_headline('english', cn.note, q, 'StartSel=<mark>,StopSel=</mark>,MaxFragments=2,ShortWord=3,FragmentDelimiter=...') AS snippet,
+    cn.created_at
+  FROM public.character_notes cn
+  WHERE cn.character_id = p_character_id
+    AND cn.search_vector @@ q
+  ORDER BY rank DESC, cn.created_at DESC
+  LIMIT p_limit OFFSET p_offset
+LOOP
+  rows := rows || jsonb_build_array(
+    jsonb_build_object(
+      'id', rec.id,
+      'rank', rec.rank,
+      'title', rec.title,
+      'note', rec.note,
+      'tags', rec.tags,
+      'snippet', rec.snippet,
+      'created_at', rec.created_at
+    )
+  );
+END LOOP;
+...
+
+-- allow only owners to select notes for their characters (same as before)
+CREATE POLICY character_owner_can_select_notes
+ON public.character_notes
+FOR SELECT
+TO authenticated
+USING (
+  EXISTS (
+    SELECT 1 FROM public.characters c
+    WHERE c.id = character_notes.character_id
+      AND (SELECT auth.uid()) = c.user_id
+  )
+);
+
+-- Example additional policy to allow filtering by tag (if needed):
+-- Note: policies act as implicit WHERE clauses; be careful adding restrictive tag checks.
+
+-- Indexing
+CREATE INDEX IF NOT EXISTS idx_character_notes_tags ON public.character_notes USING gin (tags);
+
+--Final checklist before dropping category
+ALTER TABLE public.character_notes DROP COLUMN category;
+-- Optionally DROP TYPE public.character_note_category if unused elsewhere:
+DROP TYPE IF EXISTS public.character_note_category;
+
 ```
